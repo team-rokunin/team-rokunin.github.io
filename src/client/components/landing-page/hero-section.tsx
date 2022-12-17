@@ -4,14 +4,29 @@ import Box from '@mui/joy/Box'
 
 import HeroVideo from '../../../asset/vid/hero-section.mp4'
 import { useScreenState } from '../../store/screen'
+import { useRefCallback } from '../common/hook'
+import { replaceRGBAlpha } from '../common/color'
 import Button from '../common/button'
 
-const HeroSection: React.FunctionComponent = () => {
+const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
   const [{ type: screenType }] = useScreenState()
   const [state, setState] = React.useState<HeroSectionState>({
     playState: 'loading',
   })
   const videoRef = React.useRef<HTMLVideoElement>(null)
+  const containerRef = useRefCallback((node) => {
+    if (props.onResize && node) {
+      const onResize = props.onResize
+      onResize(node.getBoundingClientRect())
+      const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          onResize(entry.contentRect)
+        }
+      })
+      resizeObserver.observe(node)
+      return () => resizeObserver.disconnect()
+    }
+  })
 
   React.useEffect(() => {
     const video = videoRef.current
@@ -64,6 +79,7 @@ const HeroSection: React.FunctionComponent = () => {
   const { playState } = state
   return (
     <Box
+      ref={containerRef}
       sx={{
         position: 'relative',
         width: '100vw',
@@ -98,7 +114,7 @@ const HeroSection: React.FunctionComponent = () => {
         },
         {
           state: 'paused',
-          background: theme.palette.primary[400].replace(/1\)$/, '0.3)'),
+          background: theme.palette.primary[400].replace(...replaceRGBAlpha(0.3)),
         },
       ].map((screen) => (
         <Box
@@ -123,6 +139,7 @@ const HeroSection: React.FunctionComponent = () => {
           position: 'absolute',
           width: '100%',
           height: '100%',
+          padding: '0 192px',
           pointerEvents: 'none',
           display: 'flex',
           flexDirection: 'column',
@@ -145,6 +162,9 @@ const HeroSection: React.FunctionComponent = () => {
 }
 type HeroSectionState = {
   playState: 'loading' | 'playing' | 'paused' | 'stopped'
+}
+type HeroSectionProps = {
+  onResize?: (dimension: DOMRect) => void
 }
 
 export default HeroSection

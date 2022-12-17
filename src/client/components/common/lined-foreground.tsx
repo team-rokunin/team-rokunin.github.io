@@ -2,6 +2,8 @@ import * as React from 'react'
 import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
 
+import { replaceRGBAlpha } from './color'
+
 const LinedForeground: React.FunctionComponent = () => {
   const theme = useTheme()
   return (
@@ -13,7 +15,7 @@ const LinedForeground: React.FunctionComponent = () => {
         height: '100%',
         background: [
           `linear-gradient(${[
-            `${theme.palette.primary[400].replace(/1\)$/, '0)')} 50%`,
+            `${theme.palette.primary[400].replace(...replaceRGBAlpha(0))} 50%`,
             'rgba(0, 0, 0, 0.25) 50%',
           ].join(',')})`,
           `linear-gradient(90deg, ${['rgba(255, 0, 0, 0.06)', 'rgba(0, 255, 0, 0.06)', 'rgba(0, 0, 255, 0.06)'].join(

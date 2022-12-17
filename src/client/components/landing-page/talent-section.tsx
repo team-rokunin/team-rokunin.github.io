@@ -4,10 +4,10 @@ import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
 
 import { useRefCallback } from '../common/hook'
-import TextField from '../common/textfield'
+import { replaceRGBAlpha } from '../common/color'
 import Button from '../common/button'
 
-const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => {
+const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
   const containerRef = useRefCallback((node) => {
     if (props.onResize && node) {
       const onResize = props.onResize
@@ -53,7 +53,7 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
           }}
         />
         <Typography level="h3" sx={{ color: 'white' }}>
-          CONTACT US
+          TALENT
         </Typography>
       </Box>
       <Typography
@@ -69,22 +69,49 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
       </Typography>
       <Box
         sx={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: '16px',
-          maxWidth: '952px',
+          maxWidth: '640px',
           margin: '16px auto',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '16px',
         }}
       >
-        <TextField label="First Name" placeholder="Type Here" />
-        <TextField label="Last Name" placeholder="Type Here" />
-        <TextField label="Email" placeholder="Type Here" />
-        <TextField label="Phone Number" placeholder="Type Here" />
-        <Box sx={{ gridColumn: 'span 2' }}>
-          <TextField label="Company Name" placeholder="Type Here" />
-        </Box>
-        <Box sx={{ gridColumn: 'span 2' }}>
-          <TextField label="Remarks" placeholder="Type Here" autoresize />
+        <Typography level="h4" sx={{ color: 'white', textAlign: 'center' }}>
+          WE ARE LOOKING FOR
+        </Typography>
+        <Box>
+          <Box sx={{ padding: '32px', border: `2px solid ${theme.palette.primary[400]}`, borderBottom: '0' }}>
+            <Typography
+              level="h4"
+              sx={{ fontSize: '32px', letterSpacing: '1em', color: theme.palette.primary[400], textAlign: 'center' }}
+            >
+              TALENT
+            </Typography>
+          </Box>
+          <Box
+            sx={{ padding: '12px', border: `2px solid ${theme.palette.primary[400]}`, borderBottomRightRadius: '32px' }}
+          >
+            <Box
+              sx={{
+                height: '48px',
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                columnGap: '8px',
+                borderBottomRightRadius: '21px',
+                overflow: 'hidden',
+              }}
+            >
+              {Array(20)
+                .fill(undefined)
+                .map((_, index) => (
+                  <Box
+                    key={index}
+                    sx={{ flex: 1, backgroundColor: theme.palette.primary[400].replace(...replaceRGBAlpha(0.5)) }}
+                  />
+                ))}
+            </Box>
+          </Box>
         </Box>
       </Box>
       <Box
@@ -94,13 +121,13 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
           padding: '64px',
         }}
       >
-        <Button label="SUBMIT" />
+        <Button label="VIEW" />
       </Box>
     </Box>
   )
 }
-type ContactSectionProps = {
+type TalentSectionProps = {
   onResize?: (dimension: DOMRect) => void
 }
 
-export default ContactSection
+export default TalentSection

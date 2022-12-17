@@ -41,6 +41,10 @@ const theme = extendTheme({
       fontSize: '16px',
       letterSpacing: '0.1em',
     },
+    body3: {
+      fontFamily: ['Roboto', 'sans-serif'].join(','),
+      fontSize: '12px',
+    },
   },
 })
 

@@ -10,6 +10,8 @@ import RokuninOniDemo from '../../../asset/vid/rokunin-oni.mp4'
 import DystopiaFinalDemo from '../../../asset/vid/dystopia-final.mp4'
 import LizardRunDemo from '../../../asset/vid/lizard-run.mp4'
 import NoMansLandDemo from '../../../asset/vid/no-mans-land.mp4'
+import { useRefCallback } from '../common/hook'
+import Button from '../common/button'
 
 const style = css(`
   @keyframes crt-turn-on {
@@ -58,18 +60,93 @@ const style = css(`
     }
   }
 `)
-const PortfolioSection: React.FunctionComponent = () => {
+const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props) => {
+  const [state, setState] = React.useState<PortfolioSectionState>({
+    playing: [],
+  })
+  const containerRef = useRefCallback((node) => {
+    if (props.onResize && node) {
+      const onResize = props.onResize
+      onResize(node.getBoundingClientRect())
+      const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          onResize(entry.contentRect)
+        }
+      })
+      resizeObserver.observe(node)
+      return () => resizeObserver.disconnect()
+    }
+  })
+  const videosLength = 4
+  const videos = [
+    {
+      title: 'False Light',
+      video: FalseLightDemo,
+    },
+    {
+      title: 'Dystopia',
+      video: DystopiaLocoDemo,
+    },
+    {
+      title: 'Oni',
+      video: RokuninOniDemo,
+    },
+    {
+      title: 'Dystopia Final',
+      video: DystopiaFinalDemo,
+    },
+    {
+      title: 'Lizard Run',
+      video: LizardRunDemo,
+    },
+    {
+      title: "No Man's Land",
+      video: NoMansLandDemo,
+    },
+  ].slice(0, videosLength)
+
+  React.useEffect(() => {
+    if (state.playing.length !== videosLength) {
+      const playing = Array(videosLength)
+        .fill(undefined)
+        .map(() => (Math.random() > 0.25 ? true : false))
+      if (playing.every((playing) => !playing)) {
+        playing[Math.floor(Math.random() * videosLength)] = true
+      }
+      setState((state) => ({ ...state, playing }))
+    }
+    startRandomlyPausePlay()
+  }, [])
+
+  const randomlyPausePlay = () => {
+    setState((state) => {
+      const playing = [...state.playing]
+      const index = Math.floor(Math.random() * videosLength)
+      playing[index] = !playing[index]
+      return !playing.every((playing) => !playing) && (playing[index] || Math.random() > 0.5)
+        ? {
+            ...state,
+            playing,
+          }
+        : state
+    })
+    startRandomlyPausePlay()
+  }
+  const startRandomlyPausePlay = () => setTimeout(randomlyPausePlay, Math.round(Math.random() * 3 + 1) * 500)
+
   const theme = useTheme()
+  const { playing } = state
   return (
     <>
       <Global styles={style} />
       <Box
+        ref={containerRef}
         sx={{
           width: '100%',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          padding: '64px',
+          padding: '64px 192px',
         }}
       >
         <Box
@@ -127,41 +204,36 @@ const PortfolioSection: React.FunctionComponent = () => {
             gridTemplateColumns: 'repeat(2, 1fr)',
             gap: '64px',
             maxWidth: '952px',
-            margin: '96px auto',
+            margin: '96px auto 16px',
           }}
         >
-          {[
-            {
-              title: 'False Light',
-              video: FalseLightDemo,
-            },
-            {
-              title: 'Dystopia',
-              video: DystopiaLocoDemo,
-            },
-            {
-              title: 'Oni',
-              video: RokuninOniDemo,
-            },
-            {
-              title: 'Dystopia Final',
-              video: DystopiaFinalDemo,
-            },
-            {
-              title: 'Lizard Run',
-              video: LizardRunDemo,
-            },
-            {
-              title: "No Man's Land",
-              video: NoMansLandDemo,
-            },
-          ].map((demo) => (
-            <VideoDemo key={demo.title} title={demo.title} video={demo.video} />
+          {videos.map((demo, index) => (
+            <VideoDemo
+              key={demo.title}
+              title={demo.title}
+              video={demo.video}
+              playState={playing[index] ? 'playing' : 'paused'}
+            />
           ))}
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '64px',
+          }}
+        >
+          <Button label="VIEW" />
         </Box>
       </Box>
     </>
   )
+}
+type PortfolioSectionState = {
+  playing: boolean[]
+}
+type PortfolioSectionProps = {
+  onResize?: (dimension: DOMRect) => void
 }
 
 const VideoDemo: React.FunctionComponent<VideoDemoProps> = (props) => {
@@ -169,6 +241,15 @@ const VideoDemo: React.FunctionComponent<VideoDemoProps> = (props) => {
     playState: 'loading',
   })
   const videoRef = React.useRef<HTMLVideoElement>(null)
+
+  React.useEffect(() => {
+    if (state.playState !== 'loading' && state.playState !== 'stopped') {
+      setState((state) => ({
+        ...state,
+        playState: props.playState,
+      }))
+    }
+  }, [props.playState])
 
   React.useEffect(() => {
     const video = videoRef.current
@@ -179,26 +260,12 @@ const VideoDemo: React.FunctionComponent<VideoDemoProps> = (props) => {
     }
   }, [state.playState])
 
-  const pauseResumeVideo = () => {
-    const video = videoRef.current
-    if (video?.ended || video?.paused) {
-      setState((state) => ({
-        ...state,
-        playState: 'playing',
-      }))
-    } else {
-      setState((state) => ({
-        ...state,
-        playState: 'paused',
-      }))
-    }
-  }
   const onVideoLoaded = () => {
     const video = videoRef.current
     if (video) {
       setState((state) => ({
         ...state,
-        playState: 'playing',
+        playState: props.playState,
       }))
     }
   }
@@ -221,7 +288,6 @@ const VideoDemo: React.FunctionComponent<VideoDemoProps> = (props) => {
   const { playState } = state
   return (
     <Box
-      onClick={playState !== 'loading' ? pauseResumeVideo : undefined}
       sx={{
         position: 'relative',
         height: '240px',
@@ -257,6 +323,7 @@ const VideoDemo: React.FunctionComponent<VideoDemoProps> = (props) => {
 type VideoDemoProps = {
   title: string
   video: string
+  playState: 'playing' | 'paused'
 }
 type VideoDemoState = {
   playState: 'loading' | 'playing' | 'paused' | 'stopped'

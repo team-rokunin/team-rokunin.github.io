@@ -6,6 +6,7 @@ import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled'
 const SvgButton = React.forwardRef((props: ButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) => {
   const theme = useTheme()
   const { label } = props
+  const id = label.replace(/\s/g, '-')
   return (
     <Box
       component="button"
@@ -41,12 +42,12 @@ const SvgButton = React.forwardRef((props: ButtonProps, ref: React.ForwardedRef<
           height: '100%',
         }}
       >
-        <clipPath id="button-shape">
+        <clipPath id={`button-shape-${id}`}>
           <polygon points="235 16 235 0 0 0 0 48.25 16 64 235 64 235 48 231 44 231 20 235 16" fill="black" />
         </clipPath>
         <rect
           className="button-rect"
-          clipPath="url(#button-shape)"
+          clipPath={`url(#button-shape-${id})`}
           x={0}
           y={0}
           width={235}
@@ -63,30 +64,36 @@ const SvgButton = React.forwardRef((props: ButtonProps, ref: React.ForwardedRef<
           x={117.5}
           y={32}
           textAnchor="middle"
-          fontSize="16px"
-          fontFamily={theme.fontFamily.body}
-          fontWeight={600}
+          fontSize="18px"
+          fontFamily={['Bank Gothic', 'sans-serif'].join(',')}
           letterSpacing="0.3em"
           dominantBaseline="middle"
           fill={theme.palette.primary[400]}
         >
           {label}
         </text>
-        <clipPath id="button-text">
+        <clipPath id={`button-text-${id}`}>
           <text
             x={117.5}
             y={32}
             textAnchor="middle"
-            fontSize="16px"
-            fontFamily={theme.fontFamily.body}
-            fontWeight={600}
+            fontSize="18px"
+            fontFamily={['Bank Gothic', 'sans-serif'].join(',')}
             letterSpacing="0.3em"
             dominantBaseline="middle"
           >
             {label}
           </text>
         </clipPath>
-        <rect className="button-rect" clipPath="url(#button-text)" x={0} y={0} width={235} height={64} fill="black" />
+        <rect
+          className="button-rect"
+          clipPath={`url(#button-text-${id})`}
+          x={0}
+          y={0}
+          width={235}
+          height={64}
+          fill="white"
+        />
       </svg>
     </Box>
   )
