@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Global, css } from '@emotion/react'
+import { keyframes } from '@emotion/react'
 
 import GrainBackground from '../common/grain-background'
 import LinedForeground from '../common/lined-foreground'
@@ -10,19 +10,17 @@ import ContactSection from './contact-section'
 import TalentSection from './talent-section'
 import FooterSection from './footer-section'
 
-const style = css(`
-  @keyframes header-cursor {
-    0% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
+export const headerCursorAnimation = keyframes`
+  0% {
+    opacity: 1;
   }
-`)
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`
 const LandingPage: React.FunctionComponent = () => {
   const [state, setState] = React.useState<LandingPageState>({
     dimensions: {},
@@ -68,7 +66,6 @@ const LandingPage: React.FunctionComponent = () => {
   const { activeSection } = state
   return (
     <>
-      <Global styles={style} />
       <GrainBackground />
       <LinedForeground />
       <NavigationBar

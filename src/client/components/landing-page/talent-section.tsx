@@ -6,6 +6,7 @@ import Typography from '@mui/joy/Typography'
 import { useRefCallback } from '../common/hook'
 import { replaceRGBAlpha } from '../common/color'
 import Button from '../common/button'
+import { headerCursorAnimation } from './'
 
 const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
   const containerRef = useRefCallback((node) => {
@@ -49,7 +50,7 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
             width: '16px',
             height: '32px',
             backgroundColor: theme.palette.primary[400],
-            animation: 'header-cursor 3s linear infinite',
+            animation: `${headerCursorAnimation} 3s linear infinite`,
           }}
         />
         <Typography level="h3" sx={{ color: 'white' }}>

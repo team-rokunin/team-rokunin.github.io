@@ -6,6 +6,7 @@ import Typography from '@mui/joy/Typography'
 import { useRefCallback } from '../common/hook'
 import TextField from '../common/textfield'
 import Button from '../common/button'
+import { headerCursorAnimation } from './'
 
 const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => {
   const containerRef = useRefCallback((node) => {
@@ -49,7 +50,7 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
             width: '16px',
             height: '32px',
             backgroundColor: theme.palette.primary[400],
-            animation: 'header-cursor 3s linear infinite',
+            animation: `${headerCursorAnimation} 3s linear infinite`,
           }}
         />
         <Typography level="h3" sx={{ color: 'white' }}>

@@ -42,7 +42,11 @@ const FooterSection: React.FunctionComponent = () => {
               text: 'Privacy Policy',
             },
           ].map((button) => (
-            <Box key={button.text} component="button" sx={{ background: 'none', border: 'none', padding: 0 }}>
+            <Box
+              key={button.text}
+              component="button"
+              sx={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+            >
               <Typography level="body1" sx={{ fontFamily: ['Bank Gothic', 'sans-serif'].join(','), color: 'black' }}>
                 {button.text}
               </Typography>

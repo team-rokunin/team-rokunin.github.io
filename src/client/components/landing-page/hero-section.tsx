@@ -1,13 +1,32 @@
 import * as React from 'react'
+import { keyframes } from '@emotion/react'
 import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
+import Typography from '@mui/joy/Typography'
 
 import HeroVideo from '../../../asset/vid/hero-section.mp4'
 import { useScreenState } from '../../store/screen'
 import { useRefCallback } from '../common/hook'
 import { replaceRGBAlpha } from '../common/color'
-import Button from '../common/button'
 
+const mouseScrollDownAnimation = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(-18px);
+  },
+  40% {
+    opacity: 1;
+    transform: translateY(0);
+  },
+  60% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+`
 const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
   const [{ type: screenType }] = useScreenState()
   const [state, setState] = React.useState<HeroSectionState>({
@@ -150,11 +169,39 @@ const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
         <Box
           sx={{
             display: 'flex',
+            flexDirection: 'column',
             justifyContent: 'center',
+            alignItems: 'center',
+            gap: '8px',
             padding: '64px',
           }}
         >
-          <Button label="LEARN MORE" />
+          <Box
+            sx={{
+              position: 'relative',
+              width: '24px',
+              height: '36px',
+              border: `2px solid ${theme.palette.primary[400]}`,
+              borderRadius: '12px',
+              overflow: 'hidden',
+            }}
+          >
+            <Box
+              sx={{
+                position: 'absolute',
+                top: '8px',
+                left: 'calc(50% - 2.5px)',
+                width: '5px',
+                height: '5px',
+                backgroundColor: theme.palette.primary[400],
+                borderRadius: '2.5px',
+                animation: `${mouseScrollDownAnimation} 2.4s infinite`,
+              }}
+            />
+          </Box>
+          <Typography level="body1" sx={{ fontSize: '12px', color: 'white' }}>
+            scroll down
+          </Typography>
         </Box>
       </Box>
     </Box>

@@ -70,6 +70,15 @@ const shuffleText = (text: string) => {
   React.useEffect(() => {
     textShuffler(text)
   }, [text])
+  React.useEffect(() => {
+    const { shufflingText, placeholder } = state
+    if (
+      shufflingText.every((text) => !text.shuffling) &&
+      shufflingText.map((letter) => letter.text).join('') !== placeholder
+    ) {
+      textShuffler(placeholder)
+    }
+  }, [state.shufflingText, state.placeholder])
   return [state.shufflingText, state.placeholder] as const
 }
 type TextShufflerState = {
