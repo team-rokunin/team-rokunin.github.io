@@ -5,6 +5,7 @@ import Typography from '@mui/joy/Typography'
 
 import { useRefCallback } from '../common/hook'
 import TextField from '../common/textfield'
+import EmailTextField from '../common/textfield/email'
 import MobileNumberTextField from '../common/textfield/mobile-number'
 import Button from '../common/button'
 import { headerCursorAnimation } from './'
@@ -80,7 +81,7 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
       >
         <TextField label="First Name" placeholder="Type Here" />
         <TextField label="Last Name" placeholder="Type Here" />
-        <TextField label="Email" placeholder="Type Here" />
+        <EmailTextField label="Email" placeholder="Type Here" />
         <MobileNumberTextField label="Phone Number" placeholder="Type Here" />
         <Box sx={{ gridColumn: 'span 2' }}>
           <TextField label="Company Name" placeholder="Type Here" />

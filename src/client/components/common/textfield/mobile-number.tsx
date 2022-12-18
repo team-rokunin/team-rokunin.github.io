@@ -1,10 +1,9 @@
 import * as React from 'react'
-import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
-import MaskedInput, { conformToMask, MaskedInputProps } from 'react-text-mask'
+import MaskedInput, { conformToMask } from 'react-text-mask'
 import InputUnstyled, { InputUnstyledInputSlotProps } from '@mui/base/InputUnstyled'
-import { MatrixContainer, useStyles } from './'
+import { MatrixContainer } from './'
 
 export const mobileNumberRegExp = /^\+601(1\d{8}|[02-9]\d{7})$/
 export const conformToMobileNumber = (value: string) => {
@@ -20,13 +19,61 @@ export const conformToMobileNumber = (value: string) => {
 }
 
 const MatrixMobileNumberField = React.forwardRef(
-  (props: InputUnstyledInputSlotProps & MobileNumberTextFieldProps, ref: React.ForwardedRef<HTMLInputElement>) => {
-    const theme = useTheme()
+  (
+    props: InputUnstyledInputSlotProps & MobileNumberTextFieldProps,
+    forwardRef: React.ForwardedRef<HTMLInputElement | undefined>
+  ) => {
+    const [state, setState] = React.useState<MatrixMobileNumberFieldState>({
+      value: '',
+      mask: [/1/, /\d/, ' ', '-', ' ', /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/],
+      focus: false,
+    })
+
+    const setRef: React.Ref<MaskedInput> = React.useCallback(
+      (ref: MaskedInput) => {
+        const input = ref ? (ref.inputElement as HTMLInputElement) : null
+        if (input && !state.input) {
+          setState((state) => ({ ...state, input }))
+        }
+      },
+      [state.input]
+    )
+    React.useImperativeHandle(
+      forwardRef,
+      () => {
+        return state.input
+      },
+      [state.input]
+    )
+
+    const onClick = React.useCallback(() => {
+      const { input } = state
+      input?.focus()
+    }, [state.input])
+    const onChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+      setState((state) => ({
+        ...state,
+        value: event.target.value,
+        mask: event.target.value?.startsWith('11')
+          ? [/1/, /\d/, ' ', '-', ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/]
+          : [/1/, /\d/, ' ', '-', ' ', /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/],
+      }))
+    }
+    const onFocus: React.FocusEventHandler<HTMLInputElement> = (event) => {
+      switch (event.type) {
+        case 'focus':
+          setState((state) => ({ ...state, focus: true }))
+          break
+        case 'blur':
+          setState((state) => ({ ...state, focus: false }))
+          break
+      }
+    }
+
     const { label, ownerState, ...others } = props
-    const styles = useStyles(theme)
-    const { width, ...textStyles } = styles
+    const { value, mask, focus } = state
     return (
-      <MatrixContainer label={label}>
+      <MatrixContainer label={label} focus={focus}>
         <Box
           sx={{
             display: 'flex',
@@ -34,15 +81,32 @@ const MatrixMobileNumberField = React.forwardRef(
             alignItems: 'center',
           }}
         >
-          <Typography component="span" sx={textStyles}>
+          <Typography component="span" onClick={onClick}>
             +60
           </Typography>
-          <Box component="input" {...others} ref={ref} sx={{ ...styles, flex: 1 }} />
+          <MaskedInput
+            {...others}
+            ref={setRef}
+            value={value}
+            onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onFocus}
+            mask={mask}
+            guide={false}
+            placeholderChar={'\u2000'}
+            style={{ flex: 1 }}
+          />
         </Box>
       </MatrixContainer>
     )
   }
 )
+type MatrixMobileNumberFieldState = {
+  input?: HTMLInputElement
+  value: string
+  mask: (string | RegExp)[]
+  focus: boolean
+}
 
 const MobileNumberTextField = React.forwardRef(
   (props: MobileNumberTextFieldProps, ref: React.ForwardedRef<HTMLDivElement>) => {
