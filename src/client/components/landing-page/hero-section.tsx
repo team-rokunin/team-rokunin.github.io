@@ -7,7 +7,6 @@ import Typography from '@mui/joy/Typography'
 import HeroVideo from '../../../asset/vid/hero-section.mp4'
 import { useScreenState } from '../../store/screen'
 import { useRefCallback } from '../common/hook'
-import { replaceRGBAlpha } from '../common/color'
 
 const mouseScrollDownAnimation = keyframes`
   0% {
@@ -25,6 +24,51 @@ const mouseScrollDownAnimation = keyframes`
   100% {
     opacity: 0;
     transform: translateY(18px);
+  }
+`
+export const crtTurnOnAnimation = keyframes`
+  0% {
+    transform: scale(1, 0.8) translate3d(0, 0, 0);
+    filter: brightness(30);
+    opacity: 1;
+  }
+  3.5% {
+    transform: scale(1, 0.8) translate3d(0, 100%, 0);
+  }
+  3.6% {
+    transform: scale(1, 0.8) translate3d(0, -100%, 0);
+    opacity: 1;
+  }
+  9% {
+    transform: scale(1.3, 0.6) translate3d(0, 100%, 0);
+    filter: brightness(3);
+    opacity: 0;
+  }
+  11% {
+    transform: scale(1, 1) translate3d(0, 0, 0);
+    filter: contrast(0) brightness(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1, 1) translate3d(0, 0, 0);
+    filter: contrast(1) brightness(1);
+    opacity: 1;
+  }
+`
+export const crtTurnOffAnimation = keyframes`
+  0% {
+    transform: scale(1, 1.3) translate3d(0, 0, 0);
+    filter: brightness(1);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(1.3, 0.001) translate3d(0, 0, 0);
+    filter: brightness(10);
+  }
+  100% {
+    animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    transform: scale(0, 0.0001) translate3d(0, 0, 0);
+    filter: brightness(50);
   }
 `
 const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
@@ -99,60 +143,37 @@ const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
   return (
     <Box
       ref={containerRef}
+      onClick={playState !== 'loading' ? pauseResumeVideo : undefined}
       sx={{
         position: 'relative',
         width: '100vw',
         height: screenType === 'xs-phone' ? '640px' : '960px',
+        cursor: playState !== 'loading' ? 'pointer' : 'default',
+        backgroundColor: 'black',
       }}
     >
-      <video
+      <Box
+        component="video"
         ref={videoRef}
         playsInline
         muted
         onLoadedData={onVideoLoaded}
         onEnded={onVideoEnded}
-        onClick={playState !== 'loading' ? pauseResumeVideo : undefined}
-        style={{
+        sx={{
           position: 'absolute',
           width: '100%',
           height: '100%',
           objectFit: 'cover',
-          cursor: playState !== 'loading' ? 'pointer' : 'default',
+          animation:
+            playState === 'playing'
+              ? `${crtTurnOnAnimation} 2.3s linear forwards`
+              : playState === 'paused'
+              ? `${crtTurnOffAnimation} 0.55s cubic-bezier(0.230, 1.000, 0.320, 1.000) forwards`
+              : undefined,
         }}
       >
         <source src={HeroVideo} type="video/mp4" />
-      </video>
-      {[
-        {
-          state: 'loading',
-          background: theme.palette.primary[400],
-        },
-        {
-          state: 'stopped',
-          background: theme.palette.primary[400],
-        },
-        {
-          state: 'paused',
-          background: theme.palette.primary[400].replace(...replaceRGBAlpha(0.3)),
-        },
-      ].map((screen) => (
-        <Box
-          key={screen.state}
-          sx={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            rowGap: '32px',
-            backgroundColor: screen.background,
-            opacity: playState === screen.state ? 1 : 0,
-            pointerEvents: 'none',
-          }}
-        />
-      ))}
+      </Box>
       <Box
         sx={{
           position: 'absolute',

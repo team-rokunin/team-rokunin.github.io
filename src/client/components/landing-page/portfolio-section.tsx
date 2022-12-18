@@ -13,52 +13,8 @@ import NoMansLandDemo from '../../../asset/vid/no-mans-land.mp4'
 import { useRefCallback } from '../common/hook'
 import Button from '../common/button'
 import { headerCursorAnimation } from './'
+import { crtTurnOnAnimation, crtTurnOffAnimation } from './hero-section'
 
-const crtTurnOnAnimation = keyframes`
-  0% {
-    transform: scale(1, 0.8) translate3d(0, 0, 0);
-    filter: brightness(30);
-    opacity: 1;
-  }
-  3.5% {
-    transform: scale(1, 0.8) translate3d(0, 100%, 0);
-  }
-  3.6% {
-    transform: scale(1, 0.8) translate3d(0, -100%, 0);
-    opacity: 1;
-  }
-  9% {
-    transform: scale(1.3, 0.6) translate3d(0, 100%, 0);
-    filter: brightness(3);
-    opacity: 0;
-  }
-  11% {
-    transform: scale(1, 1) translate3d(0, 0, 0);
-    filter: contrast(0) brightness(0);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1, 1) translate3d(0, 0, 0);
-    filter: contrast(1) brightness(1);
-    opacity: 1;
-  }
-`
-const crtTurnOffAnimation = keyframes`
-  0% {
-    transform: scale(1, 1.3) translate3d(0, 0, 0);
-    filter: brightness(1);
-    opacity: 1;
-  }
-  60% {
-    transform: scale(1.3, 0.001) translate3d(0, 0, 0);
-    filter: brightness(10);
-  }
-  100% {
-    animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
-    transform: scale(0, 0.0001) translate3d(0, 0, 0);
-    filter: brightness(50);
-  }
-`
 const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props) => {
   const [state, setState] = React.useState<PortfolioSectionState>({
     playing: [],
