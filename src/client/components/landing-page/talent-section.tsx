@@ -17,11 +17,8 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
     if (props.onResize && node) {
       const onResize = props.onResize
       onResize(node.getBoundingClientRect())
-      const resizeObserver = new ResizeObserver((entries) => {
-        const entry = entries[0]
-        if (entry) {
-          onResize(entry.contentRect)
-        }
+      const resizeObserver = new ResizeObserver(() => {
+        onResize(node.getBoundingClientRect())
       })
       resizeObserver.observe(node)
       return () => resizeObserver.disconnect()
@@ -49,6 +46,7 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
         sx={{
           display: 'flex',
           flexDirection: 'row',
+          justifyContent: 'center',
           alignItems: 'center',
           columnGap: '24px',
           margin: '64px auto',
@@ -73,6 +71,7 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
           color: theme.palette.primary[400],
           margin: '64px auto',
           maxWidth: '952px',
+          textAlign: 'center',
         }}
       >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
@@ -128,7 +127,7 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          padding: '64px',
+          margin: '64px',
         }}
       >
         <Button label="VIEW" onClick={onClick} />
@@ -150,10 +149,7 @@ const ProgressBar: React.FunctionComponent<ProgressBarProps> = (props) => {
     if (node) {
       setState((state) => ({ ...state, dimension: node.getBoundingClientRect() }))
       const resizeObserver = new ResizeObserver((entries) => {
-        const entry = entries[0]
-        if (entry) {
-          setState((state) => ({ ...state, dimension: entry.contentRect }))
-        }
+        setState((state) => ({ ...state, dimension: node.getBoundingClientRect() }))
       })
       resizeObserver.observe(node)
       return () => resizeObserver.disconnect()

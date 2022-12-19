@@ -23,10 +23,8 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
     if (props.onResize && node) {
       const onResize = props.onResize
       onResize(node.getBoundingClientRect())
-      const resizeObserver = new ResizeObserver((entries) => {
-        for (const entry of entries) {
-          onResize(entry.contentRect)
-        }
+      const resizeObserver = new ResizeObserver(() => {
+        onResize(node.getBoundingClientRect())
       })
       resizeObserver.observe(node)
       return () => resizeObserver.disconnect()
@@ -106,6 +104,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
         sx={{
           display: 'flex',
           flexDirection: 'row',
+          justifyContent: 'center',
           alignItems: 'center',
           columnGap: '24px',
           margin: '64px auto',
@@ -135,6 +134,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
           color: theme.palette.primary[400],
           margin: '64px auto',
           maxWidth: '952px',
+          textAlign: 'center',
         }}
       >
         PERSISTANCE IS OUR GUIDE
@@ -145,6 +145,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
           color: theme.palette.primary[400],
           margin: '64px auto',
           maxWidth: '952px',
+          textAlign: 'center',
         }}
       >
         We are an experienced game animation team based in Malaysia and have worked with various successful studios. Our
@@ -173,7 +174,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          padding: '64px',
+          margin: '64px',
         }}
       >
         <Button label="VIEW" />

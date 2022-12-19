@@ -2,6 +2,7 @@ import * as React from 'react'
 import { keyframes } from '@emotion/react'
 
 import GrainBackground from '../common/grain-background'
+import LightForeground from '../common/light-foreground'
 import LinedForeground from '../common/lined-foreground'
 import NavigationBar from './navigation-bar'
 import HeroSection from './hero-section'
@@ -67,6 +68,7 @@ const LandingPage: React.FunctionComponent = () => {
   return (
     <>
       <GrainBackground />
+      <LightForeground />
       <LinedForeground />
       <NavigationBar
         sections={[

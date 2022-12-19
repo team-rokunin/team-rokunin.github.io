@@ -15,10 +15,8 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
     if (props.onResize && node) {
       const onResize = props.onResize
       onResize(node.getBoundingClientRect())
-      const resizeObserver = new ResizeObserver((entries) => {
-        for (const entry of entries) {
-          onResize(entry.contentRect)
-        }
+      const resizeObserver = new ResizeObserver(() => {
+        onResize(node.getBoundingClientRect())
       })
       resizeObserver.observe(node)
       return () => resizeObserver.disconnect()
@@ -41,6 +39,7 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
         sx={{
           display: 'flex',
           flexDirection: 'row',
+          justifyContent: 'center',
           alignItems: 'center',
           columnGap: '24px',
           margin: '64px auto',
@@ -65,6 +64,7 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
           color: theme.palette.primary[400],
           margin: '64px auto',
           maxWidth: '952px',
+          textAlign: 'center',
         }}
       >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
@@ -94,7 +94,7 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          padding: '64px',
+          margin: '64px',
         }}
       >
         <Button label="SUBMIT" />

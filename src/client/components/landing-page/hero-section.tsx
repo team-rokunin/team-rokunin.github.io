@@ -81,10 +81,8 @@ const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
     if (props.onResize && node) {
       const onResize = props.onResize
       onResize(node.getBoundingClientRect())
-      const resizeObserver = new ResizeObserver((entries) => {
-        for (const entry of entries) {
-          onResize(entry.contentRect)
-        }
+      const resizeObserver = new ResizeObserver(() => {
+        onResize(node.getBoundingClientRect())
       })
       resizeObserver.observe(node)
       return () => resizeObserver.disconnect()
