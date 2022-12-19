@@ -65,7 +65,7 @@ const shuffleText = (text: string) => {
       shuffling(0, generateFrames(oldShufflingText.map((letter) => letter.text).join(''), shufflingText), resolve)()
       return promise
     },
-    [animationFrame]
+    [animationFrame, state.shufflingText]
   )
   React.useEffect(() => {
     textShuffler(text)
