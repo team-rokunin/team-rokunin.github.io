@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { keyframes } from '@emotion/react'
 import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
@@ -237,6 +236,7 @@ const VideoDemo: React.FunctionComponent<VideoDemoProps> = (props) => {
     }
   }
 
+  const theme = useTheme()
   const { video } = props
   const { playState } = state
   return (
@@ -271,7 +271,33 @@ const VideoDemo: React.FunctionComponent<VideoDemoProps> = (props) => {
       >
         <source src={video} type="video/mp4" />
       </Box>
-      <Box sx={{ position: 'absolute', width: '100%', height: '100%', backgroundColor: 'rgba(60, 249, 160, 0.1)' }} />
+      <Box sx={{ position: 'absolute', width: '100%', height: '100%', backgroundColor: 'rgba(60, 249, 160, 0.1)' }}>
+        {[
+          ['top', 'left'],
+          ['top', 'right'],
+          ['bottom', 'left'],
+          ['bottom', 'right'],
+        ].map((directions) => (
+          <Box
+            key={directions.toString()}
+            sx={{
+              position: 'absolute',
+              width: '16px',
+              height: '16px',
+              ...directions.reduce((sx, direction) => ({ ...sx, [direction]: '8px' }), {}),
+              ...directions.reduce(
+                (sx, direction) => ({
+                  ...sx,
+                  [`border${direction[0].toUpperCase()}${direction.slice(
+                    1
+                  )}`]: `2px solid ${theme.palette.text.primary}`,
+                }),
+                {}
+              ),
+            }}
+          />
+        ))}
+      </Box>
     </Box>
   )
 }
