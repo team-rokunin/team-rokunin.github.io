@@ -122,7 +122,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
         <Typography
           level="h3"
           sx={{
-            color: 'white',
+            color: theme.palette.text.primary,
           }}
         >
           WE ARE ROKUNIN
@@ -131,7 +131,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
       <Typography
         level="h4"
         sx={{
-          color: theme.palette.primary[400],
+          color: theme.palette.text.secondary,
           margin: '64px auto',
           maxWidth: '952px',
           textAlign: 'center',
@@ -142,7 +142,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
       <Typography
         level="body1"
         sx={{
-          color: theme.palette.primary[400],
+          color: theme.palette.text.secondary,
           margin: '64px auto',
           maxWidth: '952px',
           textAlign: 'center',
@@ -271,6 +271,7 @@ const VideoDemo: React.FunctionComponent<VideoDemoProps> = (props) => {
       >
         <source src={video} type="video/mp4" />
       </Box>
+      <Box sx={{ position: 'absolute', width: '100%', height: '100%', backgroundColor: 'rgba(60, 249, 160, 0.1)' }} />
     </Box>
   )
 }

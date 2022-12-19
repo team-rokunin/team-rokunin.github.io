@@ -12,14 +12,16 @@ const theme = extendTheme({
     light: {
       palette: {
         text: {
-          primary: 'rgba(34, 39, 51, 1)',
-          secondary: 'rgba(255, 255, 255, 1)',
+          primary: 'rgba(190, 253, 224, 1)',
+          secondary: 'rgba(31, 228, 146, 1)',
         },
         primary: {
           400: 'rgba(31, 228, 146, 1)',
+          600: 'rgba(22, 156, 115, 1)',
         },
         background: {
           body: 'rgba(11 ,35, 29, 1)',
+          level1: 'rgba(15, 80, 68, 1)',
         },
       },
     },

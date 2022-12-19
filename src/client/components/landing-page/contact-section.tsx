@@ -54,14 +54,14 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
             animation: `${headerCursorAnimation} 3s linear infinite`,
           }}
         />
-        <Typography level="h3" sx={{ color: 'white' }}>
+        <Typography level="h3" sx={{ color: theme.palette.text.primary }}>
           CONTACT US
         </Typography>
       </Box>
       <Typography
         level="body1"
         sx={{
-          color: theme.palette.primary[400],
+          color: theme.palette.text.secondary,
           margin: '64px auto',
           maxWidth: '952px',
           textAlign: 'center',

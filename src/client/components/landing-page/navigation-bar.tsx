@@ -236,19 +236,25 @@ const NavigationSectionButton: React.FunctionComponent<NavigationSectionButtonPr
         justifyContent: 'center',
         alignItems: 'center',
         border: `2px solid ${
-          section.active ? theme.palette.primary[400].replace(...replaceRGBAlpha(0.4)) : 'rgba(255, 255, 255, 0.2)'
+          section.active
+            ? theme.palette.primary[400].replace(...replaceRGBAlpha(0.4))
+            : theme.palette.text.primary.replace(...replaceRGBAlpha(0.2))
         }`,
         boxShadow: [
           `inset 0 0 16px ${
-            section.active ? theme.palette.primary[400].replace(...replaceRGBAlpha(0.2)) : 'rgba(255, 255, 255, 0.1)'
+            section.active
+              ? theme.palette.primary[400].replace(...replaceRGBAlpha(0.2))
+              : theme.palette.text.primary.replace(...replaceRGBAlpha(0.1))
           }`,
           `0 0 ${section.active ? 48 : 16}px ${
-            section.active ? theme.palette.primary[400].replace(...replaceRGBAlpha(0.5)) : 'rgba(255, 255, 255, 0.1)'
+            section.active
+              ? theme.palette.primary[400].replace(...replaceRGBAlpha(0.5))
+              : theme.palette.text.primary.replace(...replaceRGBAlpha(0.1))
           }`,
         ].join(','),
         backgroundColor: section.active
           ? theme.palette.primary[400].replace(...replaceRGBAlpha(0.2))
-          : 'rgba(255, 255, 255, 0.05)',
+          : theme.palette.text.primary.replace(...replaceRGBAlpha(0.05)),
         pointerEvents: 'all',
         cursor: 'pointer',
         backdropFilter: 'blur(6px)',
@@ -259,7 +265,7 @@ const NavigationSectionButton: React.FunctionComponent<NavigationSectionButtonPr
     >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" style={{ height: '14px', width: '14px' }}>
         <g
-          fill={section.active ? theme.palette.primary[400] : 'rgb(255, 255, 255)'}
+          fill={section.active ? theme.palette.primary[400] : theme.palette.text.primary}
           style={{ transition: 'fill 160ms ease-in-out' }}
         >
           {section.icon}
@@ -283,7 +289,7 @@ const NavigationSectionButtonLabel: React.FunctionComponent<NavigationSectionBut
 
   const theme = useTheme()
   return (
-    <Typography level="body1" sx={{ textAlign: 'left', color: 'white' }}>
+    <Typography level="body1" sx={{ textAlign: 'left', color: theme.palette.text.primary }}>
       {shufflingText
         .reduce((letters, letter) => {
           const previousLetter = letters.slice(-1)[0]
@@ -306,7 +312,7 @@ const NavigationSectionButtonLabel: React.FunctionComponent<NavigationSectionBut
               opacity: letter.shuffling ? 0.3 : 1,
               '&:after': {
                 content: 'attr(data-txt)',
-                color: theme.palette.primary[400].replace(...replaceRGBAlpha(0.5)),
+                color: theme.palette.text.secondary.replace(...replaceRGBAlpha(0.5)),
                 position: 'absolute',
                 top: 0,
                 left: 0,

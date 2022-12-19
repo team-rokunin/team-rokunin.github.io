@@ -13,7 +13,8 @@ const FooterSection: React.FunctionComponent = () => {
         justifyContent: 'center',
         alignItems: 'center',
         padding: '16px 192px',
-        backgroundColor: theme.palette.primary[400],
+        borderTop: `2px solid ${theme.palette.primary[400]}`,
+        backgroundColor: theme.palette.background.level1,
       }}
     >
       <Box
@@ -26,10 +27,10 @@ const FooterSection: React.FunctionComponent = () => {
         }}
       >
         <Box>
-          <Typography level="h3" sx={{ fontSize: '32px', color: 'black' }}>
+          <Typography level="h3" sx={{ fontSize: '32px', color: theme.palette.text.secondary }}>
             ROKUNIN
           </Typography>
-          <Typography level="body3" sx={{ color: 'black' }}>
+          <Typography level="body3" sx={{ color: theme.palette.text.secondary }}>
             Copyright © 2022 Rokunin Studio Reserved
           </Typography>
         </Box>
@@ -47,7 +48,10 @@ const FooterSection: React.FunctionComponent = () => {
               component="button"
               sx={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
             >
-              <Typography level="body1" sx={{ fontFamily: ['Bank Gothic', 'sans-serif'].join(','), color: 'black' }}>
+              <Typography
+                level="body1"
+                sx={{ fontFamily: ['Bank Gothic', 'sans-serif'].join(','), color: theme.palette.text.secondary }}
+              >
                 {button.text}
               </Typography>
             </Box>

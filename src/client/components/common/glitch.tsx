@@ -35,6 +35,7 @@ const Glitch: React.FunctionComponent<React.PropsWithChildren> = (props) => {
         }
         95% {
           transform: translateX(${Math.random() * 10 - 5}px);
+          filter: opacity(50%) drop-shadow(0 0 rgb(255, 255, 255));
         }
         100% {
           transform: translateX(0);

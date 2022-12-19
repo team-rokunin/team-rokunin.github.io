@@ -200,7 +200,7 @@ const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
               position: 'relative',
               width: '24px',
               height: '36px',
-              border: `2px solid ${theme.palette.primary[400]}`,
+              border: `2px solid ${theme.palette.primary[600]}`,
               borderRadius: '12px',
               overflow: 'hidden',
             }}
@@ -212,13 +212,13 @@ const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
                 left: 'calc(50% - 2.5px)',
                 width: '5px',
                 height: '5px',
-                backgroundColor: theme.palette.primary[400],
+                backgroundColor: theme.palette.primary[600],
                 borderRadius: '2.5px',
                 animation: `${mouseScrollDownAnimation} 2.4s infinite`,
               }}
             />
           </Box>
-          <Typography level="body1" sx={{ fontSize: '12px', color: 'white' }}>
+          <Typography level="body1" sx={{ fontSize: '12px', color: theme.palette.text.primary }}>
             scroll down
           </Typography>
         </Box>

@@ -61,14 +61,14 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
             animation: `${headerCursorAnimation} 3s linear infinite`,
           }}
         />
-        <Typography level="h3" sx={{ color: 'white' }}>
+        <Typography level="h3" sx={{ color: theme.palette.text.primary }}>
           TALENT
         </Typography>
       </Box>
       <Typography
         level="body1"
         sx={{
-          color: theme.palette.primary[400],
+          color: theme.palette.text.secondary,
           margin: '64px auto',
           maxWidth: '952px',
           textAlign: 'center',
@@ -86,7 +86,7 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
           gap: '16px',
         }}
       >
-        <Typography level="h4" sx={{ color: 'white', textAlign: 'center' }}>
+        <Typography level="h4" sx={{ color: theme.palette.text.primary, textAlign: 'center' }}>
           WE ARE LOOKING FOR
         </Typography>
         <Box>
@@ -148,7 +148,7 @@ const ProgressBar: React.FunctionComponent<ProgressBarProps> = (props) => {
   const containerRef = useRefCallback((node) => {
     if (node) {
       setState((state) => ({ ...state, dimension: node.getBoundingClientRect() }))
-      const resizeObserver = new ResizeObserver((entries) => {
+      const resizeObserver = new ResizeObserver(() => {
         setState((state) => ({ ...state, dimension: node.getBoundingClientRect() }))
       })
       resizeObserver.observe(node)

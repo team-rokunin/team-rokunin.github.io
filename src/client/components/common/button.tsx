@@ -54,11 +54,11 @@ const SvgButton = React.forwardRef(
             y={0}
             width={235}
             height={64}
-            fill={theme.palette.primary[400]}
+            fill={theme.palette.primary[600]}
           />
           <polygon
             points="235 16 235 0 0 0 0 48.25 16 64 235 64 235 48 231 44 231 20 235 16"
-            stroke={theme.palette.primary[400]}
+            stroke={theme.palette.primary[600]}
             strokeWidth={3}
             fillOpacity={0}
           />
@@ -70,7 +70,7 @@ const SvgButton = React.forwardRef(
             fontFamily={['Bank Gothic', 'sans-serif'].join(',')}
             letterSpacing="0.3em"
             dominantBaseline="middle"
-            fill={theme.palette.primary[400]}
+            fill={theme.palette.primary[600]}
           >
             {label}
           </text>
@@ -94,7 +94,7 @@ const SvgButton = React.forwardRef(
             y={0}
             width={235}
             height={64}
-            fill="white"
+            fill={theme.palette.text.primary}
           />
         </svg>
       </Box>
