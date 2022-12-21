@@ -261,6 +261,17 @@ const NavigationSectionButton: React.FunctionComponent<NavigationSectionButtonPr
         transition: ['border', 'box-shadow', 'background-color']
           .map((property) => `${property} 160ms ease-in-out`)
           .join(','),
+        ...(!section.active
+          ? {
+              ['&:hover']: {
+                border: `2px solid ${theme.palette.text.primary.replace(...replaceRGBAlpha(0.3))}`,
+                boxShadow: [
+                  `inset 0 0 16px ${theme.palette.text.primary.replace(...replaceRGBAlpha(0.2))}`,
+                  `0 0 32px ${theme.palette.text.primary.replace(...replaceRGBAlpha(0.2))}`,
+                ].join(','),
+              },
+            }
+          : {}),
       }}
     >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" style={{ height: '14px', width: '14px' }}>

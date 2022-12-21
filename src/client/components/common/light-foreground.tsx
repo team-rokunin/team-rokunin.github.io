@@ -11,17 +11,15 @@ const LightForeground: React.FunctionComponent = () => {
       sx={{
         display: 'block',
         position: 'fixed',
-        width: '100%',
-        height: '100%',
-        background: [
-          `linear-gradient(to left, ${[
-            theme.palette.primary[400].replace(...replaceRGBAlpha(0.3)),
-            `${theme.palette.primary[400].replace(...replaceRGBAlpha(0))} 3%`,
-            `${theme.palette.primary[400].replace(...replaceRGBAlpha(0))} 97%`,
-            theme.palette.primary[400].replace(...replaceRGBAlpha(0.3)),
-          ].join(',')})`,
-        ].join(','),
-        filter: 'contrast(170%) brightness(150%)',
+        top: '4px',
+        bottom: '4px',
+        left: '6px',
+        right: '6px',
+        boxShadow: [`inset 0 0 32px ${theme.palette.primary[400]}`, `0 0 128px ${theme.palette.primary[400]}`].join(
+          ','
+        ),
+        borderRadius: '16px',
+        filter: 'brightness(180%)',
         zIndex: 1500,
         pointerEvents: 'none',
       }}

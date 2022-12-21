@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { keyframes } from '@emotion/react'
+import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
 
 const backgroundMovingAnimation = keyframes`
@@ -35,13 +36,14 @@ const backgroundMovingAnimation = keyframes`
   }
 `
 const GrainBackground: React.FunctionComponent = () => {
+  const theme = useTheme()
   return (
     <Box
       sx={{
         position: 'fixed',
         width: '100%',
         height: '100%',
-        background: 'rgb(11 ,35, 29)',
+        background: theme.palette.background.body,
         zIndex: -1,
         pointerEvents: 'none',
       }}
@@ -53,7 +55,7 @@ const GrainBackground: React.FunctionComponent = () => {
           height: '300%',
           top: '-100%',
           left: '-100%',
-          backgroundColor: 'rgb(11 ,35, 29)',
+          backgroundColor: theme.palette.background.body,
           backgroundImage: 'url(https://grainy-gradients.vercel.app/noise.svg)',
           backgroundRepeat: 'repeat',
           backgroundSize: '1000px 1000px',

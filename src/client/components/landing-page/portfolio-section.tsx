@@ -191,17 +191,18 @@ type PortfolioSectionProps = {
 const VideoDemo: React.FunctionComponent<VideoDemoProps> = (props) => {
   const [state, setState] = React.useState<VideoDemoState>({
     playState: 'loading',
+    controlled: false,
   })
   const videoRef = React.useRef<HTMLVideoElement>(null)
 
   React.useEffect(() => {
-    if (state.playState !== 'loading' && state.playState !== 'stopped') {
+    if (!state.controlled && !['loading', 'stopped'].includes(state.playState)) {
       setState((state) => ({
         ...state,
         playState: props.playState,
       }))
     }
-  }, [props.playState])
+  }, [props.playState, state.playState, state.controlled])
 
   React.useEffect(() => {
     const video = videoRef.current
@@ -236,17 +237,40 @@ const VideoDemo: React.FunctionComponent<VideoDemoProps> = (props) => {
     }
   }
 
+  const onMouseEvent: React.MouseEventHandler = (event) => {
+    switch (event.type) {
+      case 'mouseenter':
+        if (!['loading', 'stopped'].includes(state.playState)) {
+          setState((state) => ({ ...state, playState: 'playing', controlled: true }))
+        }
+        break
+      case 'mouseleave':
+        if (!['loading', 'stopped'].includes(state.playState)) {
+          setState((state) => ({ ...state, playState: props.playState, controlled: false }))
+        }
+        break
+    }
+  }
+
   const theme = useTheme()
   const { video } = props
   const { playState } = state
   return (
     <Box
+      onMouseEnter={onMouseEvent}
+      onMouseLeave={onMouseEvent}
       sx={{
         position: 'relative',
         height: '240px',
         cursor: playState !== 'loading' ? 'pointer' : 'default',
         overflow: 'hidden',
         backgroundColor: 'black',
+        ['& .filter']: {
+          backgroundColor: 'rgba(60, 249, 160, 0.1)',
+        },
+        ['&:hover .filter']: {
+          backgroundColor: 'rgba(60, 249, 160, 0)',
+        },
       }}
     >
       <Box
@@ -271,7 +295,10 @@ const VideoDemo: React.FunctionComponent<VideoDemoProps> = (props) => {
       >
         <source src={video} type="video/mp4" />
       </Box>
-      <Box sx={{ position: 'absolute', width: '100%', height: '100%', backgroundColor: 'rgba(60, 249, 160, 0.1)' }}>
+      <Box
+        className="filter"
+        sx={{ position: 'absolute', width: '100%', height: '100%', transition: 'background-color 160ms ease-in-out' }}
+      >
         {[
           ['top', 'left'],
           ['top', 'right'],
@@ -308,6 +335,7 @@ type VideoDemoProps = {
 }
 type VideoDemoState = {
   playState: 'loading' | 'playing' | 'paused' | 'stopped'
+  controlled: boolean
 }
 
 export default PortfolioSection

@@ -20,7 +20,7 @@ const theme = extendTheme({
           600: 'rgba(22, 156, 115, 1)',
         },
         background: {
-          body: 'rgba(11 ,35, 29, 1)',
+          body: 'rgba(15, 29, 36, 1)',
           level1: 'rgba(15, 80, 68, 1)',
         },
       },

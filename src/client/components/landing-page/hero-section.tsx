@@ -148,6 +148,7 @@ const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
         height: screenType === 'xs-phone' ? '640px' : '960px',
         cursor: playState !== 'loading' ? 'pointer' : 'default',
         backgroundColor: 'black',
+        overflow: 'hidden',
       }}
     >
       <Box
