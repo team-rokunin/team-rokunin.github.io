@@ -189,7 +189,7 @@ const ProgressBar: React.FunctionComponent<ProgressBarProps> = (props) => {
             width={dimension.width * (progress / 100)}
             height={dimension.height}
             fill={theme.palette.primary[400].replace(...replaceRGBAlpha(0.5))}
-            style={{ transition: 'width 3s ease-in-out' }}
+            style={{ transition: 'width 1s ease-in-out' }}
           />
         </svg>
       ) : undefined}
@@ -207,7 +207,7 @@ const ProgressLabel: React.FunctionComponent<ProgressLabelProps> = (props) => {
   const [animationFrame, setAnimationFrame] = React.useState<number | undefined>(undefined)
   const [state, setState] = React.useState<ProgressLabelState>({ label: props.progress })
 
-  const duration = 3 * 1000
+  const duration = 1 * 1000
   const progressing = React.useCallback(
     (startTime: Date, progress: { from: number; to: number }, resolve: () => void) => () => {
       const currentDuration = Date.now() - startTime.getTime()

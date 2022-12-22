@@ -6,11 +6,9 @@ import GrainBackground from '../common/grain-background'
 import LightForeground from '../common/light-foreground'
 import LinedForeground from '../common/lined-foreground'
 import NavigationBar from '../common/navigation-bar'
-import HeroSection from './hero-section'
+import FooterSection from '../landing-page/footer-section'
+import ContactSection from '../landing-page/contact-section'
 import PortfolioSection from './portfolio-section'
-import ContactSection from './contact-section'
-import TalentSection from './talent-section'
-import FooterSection from './footer-section'
 
 export const headerCursorAnimation = keyframes`
   0% {
@@ -26,16 +24,11 @@ export const headerCursorAnimation = keyframes`
 const LandingPage: React.FunctionComponent = () => {
   const [state, setState] = React.useState<LandingPageState>({
     dimensions: {},
-    activeSection: 'hero',
+    activeSection: 'portfolio',
   })
   const { dimensions } = state
-  const sections = ['hero', 'portfolio', 'contact', 'talent'] as const
-  const heights = [
-    dimensions.hero?.height ?? 0,
-    dimensions.portfolio?.height ?? 0,
-    dimensions.contact?.height ?? 0,
-    dimensions.talent?.height ?? 0,
-  ]
+  const sections = ['portfolio', 'contact'] as const
+  const heights = [dimensions.portfolio?.height ?? 0, dimensions.contact?.height ?? 0]
 
   React.useEffect(() => {
     const onScroll = () => {
@@ -72,16 +65,6 @@ const LandingPage: React.FunctionComponent = () => {
       <NavigationBar
         sections={[
           {
-            label: 'HOME',
-            active: activeSection === 'hero',
-            icon: (
-              <>
-                <path d="M19,5v-1h-2v-1h-2v-1h-2V1H7v1h-2v1H3v1H1v1H0v2H1v10H0v2H9v-7h2v7h9v-2h-1V7h1v-2h-1Zm-2,12h-4v-7H7v7H3V6h2v-1h2v-1h2v-1h2v1h2v1h2v1h2v11Z" />
-              </>
-            ),
-            onClick: () => onClickSection('hero'),
-          },
-          {
             label: 'PORTFOLIO',
             active: activeSection === 'portfolio',
             icon: (
@@ -101,22 +84,10 @@ const LandingPage: React.FunctionComponent = () => {
             ),
             onClick: () => onClickSection('contact'),
           },
-          {
-            label: 'TALENT',
-            active: activeSection === 'talent',
-            icon: (
-              <>
-                <path d="M19,7v-1h-4V1h-1V0H6V1h-1V6H1v1H0v12H1v1H19v-1h1V7h-1Zm-1,10h-1v1H3v-1h-1V9h1v-1h14v1h1v8ZM7,3h1v-1h4v1h1v3H7V3Z" />
-              </>
-            ),
-            onClick: () => onClickSection('talent'),
-          },
         ]}
       />
-      <HeroSection onResize={(dimension) => setDimension('hero', dimension)} />
       <PortfolioSection onResize={(dimension) => setDimension('portfolio', dimension)} />
       <ContactSection onResize={(dimension) => setDimension('contact', dimension)} />
-      <TalentSection onResize={(dimension) => setDimension('talent', dimension)} />
       <FooterSection />
       <Portal>
         <LightForeground />
@@ -127,11 +98,9 @@ const LandingPage: React.FunctionComponent = () => {
 }
 type LandingPageState = {
   dimensions: {
-    hero?: DOMRect
     portfolio?: DOMRect
     contact?: DOMRect
-    talent?: DOMRect
   }
-  activeSection: 'hero' | 'portfolio' | 'contact' | 'talent'
+  activeSection: 'portfolio' | 'contact'
 }
 export default LandingPage
