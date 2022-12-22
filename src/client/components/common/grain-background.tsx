@@ -59,8 +59,8 @@ const GrainBackground: React.FunctionComponent = () => {
           backgroundImage: 'url(https://grainy-gradients.vercel.app/noise.svg)',
           backgroundRepeat: 'repeat',
           backgroundSize: '1000px 1000px',
-          animation: `${backgroundMovingAnimation} 24s steps(10) infinite`,
-          filter: 'contrast(170%) brightness(300%)',
+          animation: `${backgroundMovingAnimation} 24s steps(5) infinite`,
+          filter: 'contrast(150%) brightness(320%)',
           mixBlendMode: 'multiply',
         }}
       />

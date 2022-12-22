@@ -11,12 +11,14 @@ import LizardRunDemo from '../../../asset/vid/lizard-run.mp4'
 import NoMansLandDemo from '../../../asset/vid/no-mans-land.mp4'
 import { useRefCallback } from '../common/hook'
 import Button from '../common/button'
+import VideoLightboxModal from '../common/lightbox'
 import { headerCursorAnimation } from './'
 import { crtTurnOnAnimation, crtTurnOffAnimation } from './hero-section'
 
 const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props) => {
   const [state, setState] = React.useState<PortfolioSectionState>({
     playing: [],
+    videoAnchors: {},
   })
   const containerRef = useRefCallback((node) => {
     if (props.onResize && node) {
@@ -29,6 +31,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
       return () => resizeObserver.disconnect()
     }
   })
+  const playingVideoRef = React.useRef<HTMLVideoElement>(null)
   const videosLength = 4
   const videos = [
     {
@@ -86,109 +89,160 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
   }
   const startRandomlyPausePlay = () => setTimeout(randomlyPausePlay, Math.round(Math.random() * 3 + 1) * 500)
 
+  const videoAnchors = React.useRef<Record<string, HTMLElement>>({})
+  const setVideoRef = React.useCallback((link: string, node: HTMLElement | null) => {
+    if (node) {
+      videoAnchors.current = { ...videoAnchors.current, [link]: node }
+    }
+  }, [])
+
+  const openVideoModal = (link: string) => {
+    setState((state) => ({ ...state, modal: { type: 'video', link } }))
+    setTimeout(() => {
+      playingVideoRef.current?.play()
+    }, 480)
+  }
+  const onCloseVideoModal = () => {
+    playingVideoRef.current?.pause()
+    onCloseModal()
+  }
+  const onCloseModal = () => setState((state) => ({ ...state, modal: undefined }))
+
   const theme = useTheme()
-  const { playing } = state
+  const { playing, modal } = state
   return (
-    <Box
-      ref={containerRef}
-      sx={{
-        width: '100%',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '64px 192px',
-      }}
-    >
+    <>
       <Box
+        ref={containerRef}
         sx={{
-          display: 'flex',
-          flexDirection: 'row',
+          width: '100%',
+          flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          columnGap: '24px',
-          margin: '64px auto',
-          maxWidth: '952px',
+          padding: '64px 192px',
         }}
       >
         <Box
           sx={{
-            width: '16px',
-            height: '32px',
-            backgroundColor: theme.palette.primary[400],
-            animation: `${headerCursorAnimation} 3s linear infinite`,
-          }}
-        />
-        <Typography
-          level="h3"
-          sx={{
-            color: theme.palette.text.primary,
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            columnGap: '24px',
+            margin: '64px auto',
+            maxWidth: '952px',
           }}
         >
-          WE ARE ROKUNIN
-        </Typography>
-      </Box>
-      <Typography
-        level="h4"
-        sx={{
-          color: theme.palette.text.secondary,
-          margin: '64px auto',
-          maxWidth: '952px',
-          textAlign: 'center',
-        }}
-      >
-        PERSISTANCE IS OUR GUIDE
-      </Typography>
-      <Typography
-        level="body1"
-        sx={{
-          color: theme.palette.text.secondary,
-          margin: '64px auto',
-          maxWidth: '952px',
-          textAlign: 'center',
-        }}
-      >
-        We are an experienced game animation team based in Malaysia and have worked with various successful studios. Our
-        team of animators and artists consists of highly talented people who are well-versed in their respective fields,
-        capable of providing quality service and ensure your game stand out visually.
-      </Typography>
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: '64px',
-          maxWidth: '952px',
-          margin: '96px auto 16px',
-        }}
-      >
-        {videos.map((demo, index) => (
-          <VideoDemo
-            key={demo.title}
-            title={demo.title}
-            video={demo.video}
-            playState={playing[index] ? 'playing' : 'paused'}
+          <Box
+            sx={{
+              width: '16px',
+              height: '32px',
+              backgroundColor: theme.palette.primary[400],
+              animation: `${headerCursorAnimation} 3s linear infinite`,
+            }}
           />
-        ))}
+          <Typography
+            level="h3"
+            sx={{
+              color: theme.palette.text.primary,
+            }}
+          >
+            WE ARE ROKUNIN
+          </Typography>
+        </Box>
+        <Typography
+          level="h4"
+          sx={{
+            color: theme.palette.text.secondary,
+            margin: '64px auto',
+            maxWidth: '952px',
+            textAlign: 'center',
+          }}
+        >
+          PERSISTANCE IS OUR GUIDE
+        </Typography>
+        <Typography
+          level="body1"
+          sx={{
+            color: theme.palette.text.secondary,
+            margin: '64px auto',
+            maxWidth: '952px',
+            textAlign: 'center',
+          }}
+        >
+          We are an experienced game animation team based in Malaysia and have worked with various successful studios.
+          Our team of animators and artists consists of highly talented people who are well-versed in their respective
+          fields, capable of providing quality service and ensure your game stand out visually.
+        </Typography>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '64px',
+            maxWidth: '952px',
+            margin: '96px auto 16px',
+          }}
+        >
+          {videos.map((demo, index) => (
+            <Box key={demo.title} onClick={() => openVideoModal(demo.video)}>
+              <VideoDemo
+                ref={(video) => setVideoRef(demo.video, video)}
+                title={demo.title}
+                video={demo.video}
+                playState={playing[index] ? 'playing' : 'paused'}
+              />
+            </Box>
+          ))}
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            margin: '64px',
+          }}
+        >
+          <Button label="VIEW" />
+        </Box>
       </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          margin: '64px',
-        }}
+      <VideoLightboxModal
+        open={modal?.type === 'video'}
+        onClose={onCloseVideoModal}
+        anchor={modal?.type === 'video' ? videoAnchors.current[modal.link] : undefined}
       >
-        <Button label="VIEW" />
-      </Box>
-    </Box>
+        {modal?.type === 'video' ? (
+          <Box
+            component="video"
+            ref={playingVideoRef}
+            controls
+            playsInline
+            sx={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              outline: 'none',
+            }}
+          >
+            <source src={modal.link} type="video/mp4" />
+          </Box>
+        ) : undefined}
+      </VideoLightboxModal>
+    </>
   )
-}
-type PortfolioSectionState = {
-  playing: boolean[]
 }
 type PortfolioSectionProps = {
   onResize?: (dimension: DOMRect) => void
 }
+type PortfolioSectionState = {
+  playing: boolean[]
+  videoAnchors: Record<string, HTMLElement>
+  modal?: {
+    type: 'video'
+    link: string
+  }
+}
 
-const VideoDemo: React.FunctionComponent<VideoDemoProps> = (props) => {
+const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props, ref) => {
   const [state, setState] = React.useState<VideoDemoState>({
     playState: 'loading',
     controlled: false,
@@ -257,6 +311,7 @@ const VideoDemo: React.FunctionComponent<VideoDemoProps> = (props) => {
   const { playState } = state
   return (
     <Box
+      ref={ref}
       onMouseEnter={onMouseEvent}
       onMouseLeave={onMouseEvent}
       sx={{
@@ -327,7 +382,7 @@ const VideoDemo: React.FunctionComponent<VideoDemoProps> = (props) => {
       </Box>
     </Box>
   )
-}
+})
 type VideoDemoProps = {
   title: string
   video: string

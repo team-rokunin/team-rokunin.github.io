@@ -20,7 +20,7 @@ const LightForeground: React.FunctionComponent = () => {
         ),
         borderRadius: '16px',
         filter: 'brightness(180%)',
-        zIndex: 1500,
+        zIndex: 10000,
         pointerEvents: 'none',
       }}
     />

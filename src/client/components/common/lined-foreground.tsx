@@ -11,8 +11,10 @@ const LinedForeground: React.FunctionComponent = () => {
       sx={{
         display: 'block',
         position: 'fixed',
-        width: '100%',
-        height: '100%',
+        top: '0',
+        bottom: '0',
+        left: '0',
+        right: '0',
         background: [
           `linear-gradient(${[
             `${theme.palette.primary[400].replace(...replaceRGBAlpha(0))} 50%`,
@@ -23,7 +25,7 @@ const LinedForeground: React.FunctionComponent = () => {
           )})`,
         ].join(','),
         backgroundSize: ['100% 2px', '3px 100%'].join(','),
-        zIndex: 1500,
+        zIndex: 10000,
         pointerEvents: 'none',
       }}
     />

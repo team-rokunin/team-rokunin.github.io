@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { keyframes } from '@emotion/react'
+import Portal from '@mui/base/Portal'
 
 import GrainBackground from '../common/grain-background'
 import LightForeground from '../common/light-foreground'
@@ -68,8 +69,6 @@ const LandingPage: React.FunctionComponent = () => {
   return (
     <>
       <GrainBackground />
-      <LightForeground />
-      <LinedForeground />
       <NavigationBar
         sections={[
           {
@@ -119,6 +118,10 @@ const LandingPage: React.FunctionComponent = () => {
       <ContactSection onResize={(dimension) => setDimension('contact', dimension)} />
       <TalentSection onResize={(dimension) => setDimension('talent', dimension)} />
       <FooterSection />
+      <Portal>
+        <LightForeground />
+        <LinedForeground />
+      </Portal>
     </>
   )
 }
