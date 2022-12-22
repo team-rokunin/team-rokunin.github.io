@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 
 const LandingPage = React.lazy(() => import(/* webpackChunkName:'landing' */ './landing-page'))
 const PortfolioPage = React.lazy(() => import(/* webpackChunkName:'portfolio' */ './portfolio-page'))
@@ -7,6 +7,7 @@ const PortfolioPage = React.lazy(() => import(/* webpackChunkName:'portfolio' */
 const Router: React.FunctionComponent = () => {
   return (
     <BrowserRouter>
+      <LocationListener />
       <Routes>
         <Route
           path={`/`}
@@ -27,6 +28,19 @@ const Router: React.FunctionComponent = () => {
       </Routes>
     </BrowserRouter>
   )
+}
+const LocationListener: React.FunctionComponent = () => {
+  const { pathname } = useLocation()
+
+  React.useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'auto',
+    })
+  }, [pathname])
+
+  return null
 }
 
 export default Router
