@@ -107,7 +107,7 @@ const Button = React.forwardRef((props: ButtonProps, ref: React.ForwardedRef<HTM
 })
 type ButtonProps = {
   label: string
-  onClick?: React.MouseEventHandler<HTMLButtonElement>
+  onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>
 }
 
 export default Button

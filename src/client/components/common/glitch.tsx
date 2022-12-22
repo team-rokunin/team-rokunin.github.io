@@ -10,7 +10,7 @@ const glitchClipAnimation = keyframes`
     clip-path: polygon(0 -20%, 100% -20%, 100% 0, 0 0);
   }
 `
-const Glitch: React.FunctionComponent<React.PropsWithChildren> = (props) => {
+const Glitch: React.FunctionComponent<React.PropsWithChildren<GlitchProps>> = (props) => {
   const [state, setState] = React.useState<GlitchState>({
     hover: false,
   })
@@ -54,10 +54,12 @@ const Glitch: React.FunctionComponent<React.PropsWithChildren> = (props) => {
     }
   }
 
+  const { onClick } = props
   const { hover } = state
   return (
     <Box
       component="button"
+      onClick={onClick}
       onMouseEnter={onMouseEvent}
       onMouseLeave={onMouseEvent}
       sx={{
@@ -98,6 +100,9 @@ const Glitch: React.FunctionComponent<React.PropsWithChildren> = (props) => {
       </Box>
     </Box>
   )
+}
+type GlitchProps = {
+  onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>
 }
 type GlitchState = {
   hover: boolean

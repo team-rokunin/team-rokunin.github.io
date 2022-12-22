@@ -1,24 +1,22 @@
 import * as React from 'react'
+import SwipeableViews from 'react-swipeable-views'
 import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
 
-import FalseLightDemo from '../../../asset/vid/falselight.mp4'
-import DystopiaLocoDemo from '../../../asset/vid/dystopia-loco.mp4'
-import RokuninOniDemo from '../../../asset/vid/rokunin-oni.mp4'
-import DystopiaFinalDemo from '../../../asset/vid/dystopia-final.mp4'
-import LizardRunDemo from '../../../asset/vid/lizard-run.mp4'
-import NoMansLandDemo from '../../../asset/vid/no-mans-land.mp4'
+import { usePortfolioState } from '../../store/portfolio'
 import { useRefCallback } from '../common/hook'
-import Button from '../common/button'
+import { replaceRGBAlpha } from '../common/color'
 import VideoLightboxModal from '../common/lightbox'
 import { headerCursorAnimation } from './'
 import { VideoDemo } from '../landing-page/portfolio-section'
 
 const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props) => {
+  const [{ videos }] = usePortfolioState()
   const [state, setState] = React.useState<PortfolioSectionState>({
     playing: [],
     videoAnchors: {},
+    currentPage: 0,
   })
   const containerRef = useRefCallback((node) => {
     if (props.onResize && node) {
@@ -33,32 +31,6 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
   })
   const playingVideoRef = React.useRef<HTMLVideoElement>(null)
   const videosLength = 4
-  const videos = [
-    {
-      title: 'False Light',
-      video: FalseLightDemo,
-    },
-    {
-      title: 'Dystopia',
-      video: DystopiaLocoDemo,
-    },
-    {
-      title: 'Oni',
-      video: RokuninOniDemo,
-    },
-    {
-      title: 'Dystopia Final',
-      video: DystopiaFinalDemo,
-    },
-    {
-      title: 'Lizard Run',
-      video: LizardRunDemo,
-    },
-    {
-      title: "No Man's Land",
-      video: NoMansLandDemo,
-    },
-  ].slice(0, videosLength)
 
   React.useEffect(() => {
     if (state.playing.length !== videosLength) {
@@ -96,6 +68,10 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
     }
   }, [])
 
+  const onChangePage = (index: number) => {
+    setState((state) => ({ ...state, currentPage: index }))
+  }
+
   const openVideoModal = (link: string) => {
     setState((state) => ({ ...state, modal: { type: 'video', link } }))
     setTimeout(() => {
@@ -109,7 +85,45 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
   const onCloseModal = () => setState((state) => ({ ...state, modal: undefined }))
 
   const theme = useTheme()
-  const { playing, modal } = state
+  const { playing, currentPage, modal } = state
+  const buttonStyle: React.CSSProperties = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '36px',
+    height: '36px',
+    backgroundColor: 'transparent',
+  }
+  const navigationButton = (label: string, nextPage?: number) => (
+    <Box
+      component="button"
+      onClick={typeof nextPage === 'number' ? () => onChangePage(nextPage) : undefined}
+      sx={{
+        ...buttonStyle,
+        cursor: typeof nextPage === 'number' ? 'pointer' : 'default',
+        border: `1.5px solid ${
+          typeof nextPage === 'number'
+            ? theme.palette.text.primary.replace(...replaceRGBAlpha(0.4))
+            : theme.palette.text.primary.replace(...replaceRGBAlpha(0.2))
+        }`,
+        boxShadow: `inset 0 0 16px ${
+          typeof nextPage === 'number' ? theme.palette.text.primary.replace(...replaceRGBAlpha(0.1)) : 'transparent'
+        }`,
+        transition: ['border', 'box-shadow'].map((property) => `${property} 160ms ease-in-out`).join(','),
+        ['& > span']: {
+          transition: 'color 160ms ease-in-out',
+          color:
+            typeof nextPage === 'number'
+              ? theme.palette.text.primary
+              : theme.palette.text.primary.replace(...replaceRGBAlpha(0.5)),
+        },
+      }}
+    >
+      <Typography component="span" level="body1" sx={{ fontSize: '12px' }}>
+        {label}
+      </Typography>
+    </Box>
+  )
   return (
     <>
       <Box
@@ -174,34 +188,91 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
           Our team of animators and artists consists of highly talented people who are well-versed in their respective
           fields, capable of providing quality service and ensure your game stand out visually.
         </Typography>
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '64px',
-            maxWidth: '952px',
+        <SwipeableViews
+          index={currentPage}
+          onChangeIndex={onChangePage}
+          style={{
+            maxWidth: '1016px',
             margin: '96px auto 16px',
           }}
         >
-          {videos.map((demo, index) => (
-            <Box key={demo.title} onClick={() => openVideoModal(demo.video)}>
-              <VideoDemo
-                ref={(video) => setVideoRef(demo.video, video)}
-                title={demo.title}
-                video={demo.video}
-                playState={playing[index] ? 'playing' : 'paused'}
-              />
-            </Box>
-          ))}
-        </Box>
+          {videos
+            .reduce((pages, video) => {
+              const lastPage = pages[pages.length - 1]
+              if (lastPage && lastPage.length < videosLength) {
+                return [...pages.slice(0, -1), [...lastPage, video]]
+              } else {
+                return [...pages, [video]]
+              }
+            }, [] as typeof videos[])
+            .map((page, index) => (
+              <Box
+                key={index}
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gap: '64px',
+                  padding: '0 32px',
+                }}
+              >
+                {page.map((demo, index) => (
+                  <Box key={demo.title} onClick={() => openVideoModal(demo.url)}>
+                    <VideoDemo
+                      ref={(video) => setVideoRef(demo.url, video)}
+                      title={demo.title}
+                      video={demo.url}
+                      playState={playing[index] ? 'playing' : 'paused'}
+                    />
+                  </Box>
+                ))}
+              </Box>
+            ))}
+        </SwipeableViews>
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
             margin: '64px',
+            columnGap: '16px',
           }}
         >
-          <Button label="VIEW" />
+          {navigationButton('<', currentPage > 0 ? currentPage - 1 : undefined)}
+          {Array(Math.ceil(videos.length / videosLength))
+            .fill(undefined)
+            .map((_, index) => (
+              <Box
+                component="button"
+                key={index}
+                onClick={() => onChangePage(index)}
+                sx={{
+                  ...buttonStyle,
+                  cursor: 'pointer',
+                  border: `1.5px solid ${
+                    index === currentPage
+                      ? theme.palette.primary[400].replace(...replaceRGBAlpha(0.6))
+                      : theme.palette.text.primary.replace(...replaceRGBAlpha(0.4))
+                  }`,
+                  boxShadow: `inset 0 0 16px ${
+                    index === currentPage
+                      ? theme.palette.primary[400].replace(...replaceRGBAlpha(0.2))
+                      : theme.palette.text.primary.replace(...replaceRGBAlpha(0.1))
+                  }`,
+                  transition: ['border', 'box-shadow'].map((property) => `${property} 160ms ease-in-out`).join(','),
+                  ['& > span']: {
+                    transition: 'color 160ms ease-in-out',
+                    color: index === currentPage ? theme.palette.text.secondary : theme.palette.text.primary,
+                  },
+                }}
+              >
+                <Typography component="span" level="body1" sx={{ fontSize: '12px' }}>
+                  {index + 1}
+                </Typography>
+              </Box>
+            ))}
+          {navigationButton(
+            '>',
+            currentPage < Math.ceil(videos.length / videosLength) - 1 ? currentPage + 1 : undefined
+          )}
         </Box>
       </Box>
       <VideoLightboxModal
@@ -236,6 +307,7 @@ type PortfolioSectionProps = {
 type PortfolioSectionState = {
   playing: boolean[]
   videoAnchors: Record<string, HTMLElement>
+  currentPage: number
   modal?: {
     type: 'video'
     link: string

@@ -1,14 +1,10 @@
 import * as React from 'react'
+import { useLinkClickHandler } from 'react-router-dom'
 import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
 
-import FalseLightDemo from '../../../asset/vid/falselight.mp4'
-import DystopiaLocoDemo from '../../../asset/vid/dystopia-loco.mp4'
-import RokuninOniDemo from '../../../asset/vid/rokunin-oni.mp4'
-import DystopiaFinalDemo from '../../../asset/vid/dystopia-final.mp4'
-import LizardRunDemo from '../../../asset/vid/lizard-run.mp4'
-import NoMansLandDemo from '../../../asset/vid/no-mans-land.mp4'
+import { usePortfolioState } from '../../store/portfolio'
 import { useRefCallback } from '../common/hook'
 import Button from '../common/button'
 import VideoLightboxModal from '../common/lightbox'
@@ -16,6 +12,7 @@ import { headerCursorAnimation } from './'
 import { crtTurnOnAnimation, crtTurnOffAnimation } from './hero-section'
 
 const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props) => {
+  const [{ videos }] = usePortfolioState()
   const [state, setState] = React.useState<PortfolioSectionState>({
     playing: [],
     videoAnchors: {},
@@ -33,32 +30,6 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
   })
   const playingVideoRef = React.useRef<HTMLVideoElement>(null)
   const videosLength = 4
-  const videos = [
-    {
-      title: 'False Light',
-      video: FalseLightDemo,
-    },
-    {
-      title: 'Dystopia',
-      video: DystopiaLocoDemo,
-    },
-    {
-      title: 'Oni',
-      video: RokuninOniDemo,
-    },
-    {
-      title: 'Dystopia Final',
-      video: DystopiaFinalDemo,
-    },
-    {
-      title: 'Lizard Run',
-      video: LizardRunDemo,
-    },
-    {
-      title: "No Man's Land",
-      video: NoMansLandDemo,
-    },
-  ].slice(0, videosLength)
 
   React.useEffect(() => {
     if (state.playing.length !== videosLength) {
@@ -108,6 +79,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
   }
   const onCloseModal = () => setState((state) => ({ ...state, modal: undefined }))
 
+  const navigatePortfolio = useLinkClickHandler('/portfolio')
   const theme = useTheme()
   const { playing, modal } = state
   return (
@@ -179,16 +151,17 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
             display: 'grid',
             gridTemplateColumns: 'repeat(2, 1fr)',
             gap: '64px',
-            maxWidth: '952px',
+            maxWidth: '1016px',
             margin: '96px auto 16px',
+            padding: '0 32px',
           }}
         >
-          {videos.map((demo, index) => (
-            <Box key={demo.title} onClick={() => openVideoModal(demo.video)}>
+          {videos.slice(0, videosLength).map((demo, index) => (
+            <Box key={demo.title} onClick={() => openVideoModal(demo.url)}>
               <VideoDemo
-                ref={(video) => setVideoRef(demo.video, video)}
+                ref={(video) => setVideoRef(demo.url, video)}
                 title={demo.title}
-                video={demo.video}
+                video={demo.url}
                 playState={playing[index] ? 'playing' : 'paused'}
               />
             </Box>
@@ -201,7 +174,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
             margin: '64px',
           }}
         >
-          <Button label="VIEW" />
+          <Button label="VIEW" onClick={navigatePortfolio} />
         </Box>
       </Box>
       <VideoLightboxModal

@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useLinkClickHandler } from 'react-router-dom'
 import { keyframes } from '@emotion/react'
 import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
@@ -28,6 +29,7 @@ const letterShufflingAnimation = keyframes`
   }
 `
 const NavigationBar: React.FunctionComponent<NavigationBarProps> = (props) => {
+  const navigateHome = useLinkClickHandler('/')
   const theme = useTheme()
   const { sections } = props
   return (
@@ -92,13 +94,11 @@ const NavigationBar: React.FunctionComponent<NavigationBarProps> = (props) => {
         />
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
             height: '226px',
             padding: '64px',
           }}
         >
-          <Glitch>
+          <Glitch onClick={navigateHome}>
             <img
               src={RokuninLogo}
               style={{
