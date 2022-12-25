@@ -68,7 +68,6 @@ const Glitch: React.FunctionComponent<React.PropsWithChildren<GlitchProps>> = (p
         background: 'none',
         border: 'none',
         cursor: 'pointer',
-        pointerEvents: 'all',
         transition: 'opacity 160ms ease-in-out',
         ['&:active']: { opacity: 0.5 },
       }}

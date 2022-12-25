@@ -4,6 +4,7 @@ import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
 
+import { useScreenState } from '../../store/screen'
 import { useCareerState } from '../../store/career'
 import { useRefCallback } from '../common/hook'
 import { replaceRGBAlpha } from '../common/color'
@@ -11,6 +12,7 @@ import Button from '../common/button'
 import { headerCursorAnimation } from './'
 
 const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
+  const [{ type: screenType }] = useScreenState()
   const [{ careers }] = useCareerState()
   const [state, setState] = React.useState<TalentSectionState>({
     progress: 0,
@@ -47,7 +49,7 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '64px 192px',
+        padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '46px' : '64px 192px',
       }}
     >
       <Box
@@ -101,7 +103,12 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
           <Box sx={{ padding: '32px', border: `2px solid ${theme.palette.primary[400]}`, borderBottom: '0' }}>
             <Typography
               level="h4"
-              sx={{ fontSize: '32px', letterSpacing: '1em', color: theme.palette.primary[400], textAlign: 'center' }}
+              sx={{
+                fontSize: '32px',
+                letterSpacing: ['xs-phone'].includes(screenType) ? '0.5em' : '1em',
+                color: theme.palette.primary[400],
+                textAlign: 'center',
+              }}
             >
               TALENT
             </Typography>
@@ -151,6 +158,7 @@ type TalentSectionProps = {
 }
 
 const ProgressBar: React.FunctionComponent<ProgressBarProps> = (props) => {
+  const [{ type: screenType }] = useScreenState()
   const [state, setState] = React.useState<ProgressBarState>({})
 
   const containerRef = useRefCallback((node) => {
@@ -167,7 +175,8 @@ const ProgressBar: React.FunctionComponent<ProgressBarProps> = (props) => {
   const theme = useTheme()
   const { progress } = props
   const { dimension } = state
-  const sectionWidth = dimension ? (dimension.width - 19 * 8) / 20 : 0
+  const numberOfSlots = ['xs-phone'].includes(screenType) ? 10 : 20
+  const sectionWidth = dimension ? (dimension.width - (numberOfSlots - 1) * 8) / numberOfSlots : 0
   return (
     <Box ref={containerRef} sx={{ height: '48px', borderBottomRightRadius: '21px', overflow: 'hidden' }}>
       {dimension ? (
@@ -177,7 +186,7 @@ const ProgressBar: React.FunctionComponent<ProgressBarProps> = (props) => {
           style={{ width: '100%', height: '100%' }}
         >
           <clipPath id="progress-bar">
-            {Array(20)
+            {Array(numberOfSlots)
               .fill(undefined)
               .map((_, index) => (
                 <rect

@@ -3,6 +3,7 @@ import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
 
+import { useScreenState } from '../../store/screen'
 import { useRefCallback } from '../common/hook'
 import TextField from '../common/textfield'
 import EmailTextField from '../common/textfield/email'
@@ -11,6 +12,8 @@ import Button from '../common/button'
 import { headerCursorAnimation } from './'
 
 const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => {
+  const [{ type: screenType }] = useScreenState()
+
   const containerRef = useRefCallback((node) => {
     if (props.onResize && node) {
       const onResize = props.onResize
@@ -32,7 +35,7 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '64px 192px',
+        padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '46px' : '64px 192px',
       }}
     >
       <Box
@@ -73,7 +76,7 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
+          gridTemplateColumns: ['xs-phone'].includes(screenType) ? '1fr' : 'repeat(2, 1fr)',
           gap: '16px',
           maxWidth: '952px',
           margin: '16px auto',
@@ -83,10 +86,10 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
         <TextField label="Last Name" placeholder="Type Here" />
         <EmailTextField label="Email" placeholder="Type Here" />
         <MobileNumberTextField label="Phone Number" placeholder="Type Here" />
-        <Box sx={{ gridColumn: 'span 2' }}>
+        <Box sx={{ gridColumn: ['xs-phone'].includes(screenType) ? undefined : 'span 2' }}>
           <TextField label="Company Name" placeholder="Type Here" />
         </Box>
-        <Box sx={{ gridColumn: 'span 2' }}>
+        <Box sx={{ gridColumn: ['xs-phone'].includes(screenType) ? undefined : 'span 2' }}>
           <TextField label="Remarks" placeholder="Type Here" multiline />
         </Box>
       </Box>

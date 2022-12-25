@@ -17,7 +17,7 @@ const SvgButton = React.forwardRef(
         sx={{
           width: '160px',
           padding: '0',
-          pointerEvents: props.disabled ? 'none' : 'all',
+          pointerEvents: props.disabled ? 'none' : 'auto',
           cursor: 'pointer',
           background: 'transparent',
           border: 'none',

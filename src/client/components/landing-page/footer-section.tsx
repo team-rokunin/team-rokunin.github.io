@@ -3,9 +3,11 @@ import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
 
+import { useScreenState } from '../../store/screen'
 import Glitch from '../common/glitch'
 
 const FooterSection: React.FunctionComponent = () => {
+  const [{ type: screenType }] = useScreenState()
   const theme = useTheme()
   return (
     <Box
@@ -14,7 +16,7 @@ const FooterSection: React.FunctionComponent = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '16px 192px',
+        padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '16px 46px' : '64px 192px',
         borderTop: `2px solid ${theme.palette.primary[400]}`,
         backgroundColor: theme.palette.background.level1,
       }}
@@ -23,8 +25,10 @@ const FooterSection: React.FunctionComponent = () => {
         sx={{
           display: 'flex',
           flexDirection: 'row',
+          flexWrap: 'wrap',
           justifyContent: 'space-between',
-          gap: '16px',
+          columnGap: '32px',
+          rowGap: '16px',
           margin: '16px auto',
         }}
       >
@@ -36,7 +40,16 @@ const FooterSection: React.FunctionComponent = () => {
             Copyright © 2022 Rokunin Studio Reserved
           </Typography>
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '32px' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            columnGap: '32px',
+            rowGap: '12px',
+          }}
+        >
           {[
             {
               text: 'Terms of Service',

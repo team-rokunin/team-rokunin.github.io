@@ -3,11 +3,13 @@ import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
 
+import { useScreenState } from '../../store/screen'
 import { useCareerState } from '../../store/career'
 import { useRefCallback } from '../common/hook'
 import { headerCursorAnimation } from './'
 
 const CareerSection: React.FunctionComponent<CareerSectionProps> = (props) => {
+  const [{ type: screenType }] = useScreenState()
   const [{ careers }] = useCareerState()
 
   const containerRef = useRefCallback((node) => {
@@ -31,7 +33,7 @@ const CareerSection: React.FunctionComponent<CareerSectionProps> = (props) => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '64px 192px',
+        padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '46px' : '64px 192px',
       }}
     >
       <Box

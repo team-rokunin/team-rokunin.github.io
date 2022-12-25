@@ -145,7 +145,7 @@ const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
       sx={{
         position: 'relative',
         width: '100vw',
-        height: screenType === 'xs-phone' ? '640px' : '960px',
+        height: ['xs-phone', 'sm-tablet'].includes(screenType) ? '720px' : '960px',
         cursor: playState !== 'loading' ? 'pointer' : 'default',
         backgroundColor: 'black',
         overflow: 'hidden',
@@ -178,7 +178,7 @@ const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
           position: 'absolute',
           width: '100%',
           height: '100%',
-          padding: '0 192px',
+          padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 46px' : '0 192px',
           pointerEvents: 'none',
           display: 'flex',
           flexDirection: 'column',

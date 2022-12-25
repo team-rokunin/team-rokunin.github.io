@@ -4,6 +4,7 @@ import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
 
+import { useScreenState } from '../../store/screen'
 import { usePortfolioState } from '../../store/portfolio'
 import { useRefCallback } from '../common/hook'
 import { replaceRGBAlpha } from '../common/color'
@@ -12,6 +13,7 @@ import { headerCursorAnimation } from './'
 import { VideoDemo } from '../landing-page/portfolio-section'
 
 const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props) => {
+  const [{ type: screenType }] = useScreenState()
   const [{ videos }] = usePortfolioState()
   const [state, setState] = React.useState<PortfolioSectionState>({
     playing: [],
@@ -30,7 +32,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
     }
   })
   const playingVideoRef = React.useRef<HTMLVideoElement>(null)
-  const videosLength = 4
+  const videosLength = ['xs-phone'].includes(screenType) ? 2 : 4
 
   React.useEffect(() => {
     if (state.playing.length !== videosLength) {
@@ -133,7 +135,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          padding: '64px 192px',
+          padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '46px 0' : '64px 192px',
         }}
       >
         <Box
@@ -143,6 +145,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
             justifyContent: 'center',
             alignItems: 'center',
             columnGap: '24px',
+            padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 46px' : '0',
             margin: '64px auto',
             maxWidth: '952px',
           }}
@@ -168,6 +171,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
           level="h4"
           sx={{
             color: theme.palette.text.secondary,
+            padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 46px' : '0',
             margin: '64px auto',
             maxWidth: '952px',
             textAlign: 'center',
@@ -179,6 +183,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
           level="body1"
           sx={{
             color: theme.palette.text.secondary,
+            padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 46px' : '0',
             margin: '64px auto',
             maxWidth: '952px',
             textAlign: 'center',
@@ -210,9 +215,9 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
                 key={index}
                 sx={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gridTemplateColumns: ['xs-phone'].includes(screenType) ? '1fr' : 'repeat(2, 1fr)',
                   gap: '64px',
-                  padding: '0 32px',
+                  padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 46px' : '0 32px',
                 }}
               >
                 {page.map((demo, index) => (
