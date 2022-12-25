@@ -181,7 +181,7 @@ const NavigationBar: React.FunctionComponent<NavigationBarProps> = (props) => {
           flexDirection: ['xs-phone', 'sm-tablet'].includes(screenType) ? 'column' : 'row',
           justifyContent: 'space-between',
           backgroundColor: ['xs-phone', 'sm-tablet'].includes(screenType)
-            ? theme.palette.text.primary.replace(...replaceRGBAlpha(0.3))
+            ? theme.palette.background.body.replace(...replaceRGBAlpha(0.8))
             : undefined,
           backdropFilter: ['xs-phone', 'sm-tablet'].includes(screenType) ? 'blur(6px)' : undefined,
           opacity: !['xs-phone', 'sm-tablet'].includes(screenType) || menuOpen ? 1 : 0,
