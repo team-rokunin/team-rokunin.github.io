@@ -21,8 +21,8 @@ export const headerCursorAnimation = keyframes`
     opacity: 1;
   }
 `
-const LandingPage: React.FunctionComponent = () => {
-  const [state, setState] = React.useState<LandingPageState>({
+const PortfolioPage: React.FunctionComponent = () => {
+  const [state, setState] = React.useState<PortfolioPageState>({
     dimensions: {},
     activeSection: 'portfolio',
   })
@@ -48,10 +48,10 @@ const LandingPage: React.FunctionComponent = () => {
     return () => document.removeEventListener('scroll', onScroll)
   }, [state.dimensions, state.activeSection])
 
-  const setDimension = (section: keyof LandingPageState['dimensions'], dimension: DOMRect) => {
+  const setDimension = (section: keyof PortfolioPageState['dimensions'], dimension: DOMRect) => {
     setState((state) => ({ ...state, dimensions: { ...state.dimensions, [section]: dimension } }))
   }
-  const onClickSection = (section: keyof LandingPageState['dimensions']) => {
+  const onClickSection = (section: keyof PortfolioPageState['dimensions']) => {
     window.scroll({
       top: heights.slice(0, sections.indexOf(section)).reduce((total, next) => total + next, 0),
       behavior: 'smooth',
@@ -96,11 +96,11 @@ const LandingPage: React.FunctionComponent = () => {
     </>
   )
 }
-type LandingPageState = {
+type PortfolioPageState = {
   dimensions: {
     portfolio?: DOMRect
     contact?: DOMRect
   }
   activeSection: 'portfolio' | 'contact'
 }
-export default LandingPage
+export default PortfolioPage

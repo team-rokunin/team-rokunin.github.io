@@ -216,11 +216,11 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
                 }}
               >
                 {page.map((demo, index) => (
-                  <Box key={demo.title} onClick={() => openVideoModal(demo.url)}>
+                  <Box key={demo.title} onClick={() => openVideoModal(demo.video)}>
                     <VideoDemo
-                      ref={(video) => setVideoRef(demo.url, video)}
+                      ref={(video) => setVideoRef(demo.video, video)}
                       title={demo.title}
-                      video={demo.url}
+                      video={demo.video}
                       playState={playing[index] ? 'playing' : 'paused'}
                     />
                   </Box>

@@ -49,7 +49,7 @@ export const MatrixContainer: React.FunctionComponent<MatrixContainerProps> = (p
             background: 'transparent',
             fontSize: '20px',
             fontFamily: theme.typography.body1.fontFamily as React.CSSProperties['fontFamily'],
-            color,
+            color: theme.palette.text.primary,
           },
           ['& input::placeholder, & textarea::placeholder']: {
             fontStyle: 'italic',

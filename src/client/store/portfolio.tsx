@@ -1,11 +1,8 @@
 import * as React from 'react'
+import * as Database from 'firebase/database'
+import * as Storage from 'firebase/storage'
 
-import FalseLightDemo from '../../asset/vid/falselight.mp4'
-import DystopiaLocoDemo from '../../asset/vid/dystopia-loco.mp4'
-import RokuninOniDemo from '../../asset/vid/rokunin-oni.mp4'
-import DystopiaFinalDemo from '../../asset/vid/dystopia-final.mp4'
-import LizardRunDemo from '../../asset/vid/lizard-run.mp4'
-import NoMansLandDemo from '../../asset/vid/no-mans-land.mp4'
+import initializeFirebaseApp from './firebase'
 
 /**
  * One of the options to host a video free is on Google Drive with the following hack
@@ -16,40 +13,44 @@ import NoMansLandDemo from '../../asset/vid/no-mans-land.mp4'
 export type State = {
   videos: {
     title: string
-    url: string
+    video: string
   }[]
 }
 const PortfolioContext = React.createContext([{} as State] as const)
 
 export const Provider: React.FunctionComponent<React.PropsWithChildren> = (props) => {
   const [state, setState] = React.useState<State>({
-    videos: [
-      {
-        title: 'False Light',
-        url: FalseLightDemo,
-      },
-      {
-        title: 'Dystopia',
-        url: DystopiaLocoDemo,
-      },
-      {
-        title: 'Oni',
-        url: RokuninOniDemo,
-      },
-      {
-        title: 'Dystopia Final',
-        url: DystopiaFinalDemo,
-      },
-      {
-        title: 'Lizard Run',
-        url: LizardRunDemo,
-      },
-      {
-        title: "No Man's Land",
-        url: NoMansLandDemo,
-      },
-    ],
+    videos: [],
   })
+
+  React.useEffect(() => {
+    const firebase = initializeFirebaseApp()
+    const database = Database.getDatabase(
+      firebase,
+      'https://rokunin-67eb4-default-rtdb.asia-southeast1.firebasedatabase.app'
+    )
+    const storage = Storage.getStorage(firebase, 'gs://rokunin-67eb4.appspot.com')
+    const databaseRef = Database.ref(database, 'portfolios')
+    Database.get(databaseRef)
+      .then((snapshot) => {
+        const values = snapshot.val() as { title: string; video: string }[]
+        return Promise.all(
+          values.reverse().map(async (value) => {
+            const storageRef = Storage.ref(storage, value.video)
+            return {
+              title: value.title,
+              video: await Storage.getDownloadURL(storageRef),
+            }
+          })
+        )
+      })
+      .then((videos) =>
+        setState((state) => ({
+          ...state,
+          videos,
+        }))
+      )
+  }, [])
 
   return <PortfolioContext.Provider value={[state]}>{props.children}</PortfolioContext.Provider>
 }

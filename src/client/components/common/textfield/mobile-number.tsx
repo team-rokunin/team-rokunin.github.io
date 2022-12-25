@@ -3,7 +3,7 @@ import MaskedInput from 'react-text-mask'
 import InputUnstyled, { InputUnstyledInputSlotProps } from '@mui/base/InputUnstyled'
 import { MatrixContainer } from './'
 
-export const mobileRegExp = /^[0-9+-]+$/
+export const mobileRegExp = /^\+?[0-9-]+$/
 
 const MatrixMobileNumberField = React.forwardRef(
   (
@@ -51,7 +51,10 @@ const MatrixMobileNumberField = React.forwardRef(
           onBlur={onFocus}
           mask={
             {
-              mask: (value: string) => Array(value.length + 1).fill(/[0-9+-]/),
+              mask: (value: string) =>
+                Array(value.length + 1)
+                  .fill(undefined)
+                  .map((_, index) => (index === 0 ? /[0-9+-]/ : /[0-9-]/)),
               pipe: (value: string) => value,
             } as any
           }

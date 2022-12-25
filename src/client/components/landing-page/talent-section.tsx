@@ -1,14 +1,17 @@
 import * as React from 'react'
+import { useLinkClickHandler } from 'react-router-dom'
 import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
 
+import { useCareerState } from '../../store/career'
 import { useRefCallback } from '../common/hook'
 import { replaceRGBAlpha } from '../common/color'
 import Button from '../common/button'
 import { headerCursorAnimation } from './'
 
 const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
+  const [{ careers }] = useCareerState()
   const [state, setState] = React.useState<TalentSectionState>({
     progress: 0,
   })
@@ -25,8 +28,13 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
     }
   })
 
-  const onClick = () => {
+  const navigatePortfolio = useLinkClickHandler('/talent')
+  const onClick: React.MouseEventHandler<HTMLAnchorElement> = (event) => {
+    event.preventDefault()
     setState((state) => ({ ...state, progress: state.progress === 0 ? 100 : 0 }))
+    setTimeout(() => {
+      navigatePortfolio(event)
+    }, 1000)
   }
 
   const theme = useTheme()
@@ -130,7 +138,7 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
           margin: '64px',
         }}
       >
-        <Button label="VIEW" onClick={onClick} />
+        <Button label="VIEW" url="/talent" onClick={onClick} disabled={careers.length === 0} />
       </Box>
     </Box>
   )

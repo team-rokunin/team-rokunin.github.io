@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 
 const LandingPage = React.lazy(() => import(/* webpackChunkName:'landing' */ './landing-page'))
 const PortfolioPage = React.lazy(() => import(/* webpackChunkName:'portfolio' */ './portfolio-page'))
+const TalentPage = React.lazy(() => import(/* webpackChunkName:'talent' */ './talent-page'))
 
 const Router: React.FunctionComponent = () => {
   return (
@@ -22,6 +23,14 @@ const Router: React.FunctionComponent = () => {
           element={
             <React.Suspense>
               <PortfolioPage />
+            </React.Suspense>
+          }
+        />
+        <Route
+          path={`/talent`}
+          element={
+            <React.Suspense>
+              <TalentPage />
             </React.Suspense>
           }
         />

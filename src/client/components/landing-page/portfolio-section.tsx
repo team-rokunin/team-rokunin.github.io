@@ -157,11 +157,11 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
           }}
         >
           {videos.slice(0, videosLength).map((demo, index) => (
-            <Box key={demo.title} onClick={() => openVideoModal(demo.url)}>
+            <Box key={demo.title} onClick={() => openVideoModal(demo.video)}>
               <VideoDemo
-                ref={(video) => setVideoRef(demo.url, video)}
+                ref={(video) => setVideoRef(demo.video, video)}
                 title={demo.title}
-                video={demo.url}
+                video={demo.video}
                 playState={playing[index] ? 'playing' : 'paused'}
               />
             </Box>
@@ -174,7 +174,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
             margin: '64px',
           }}
         >
-          <Button label="VIEW" onClick={navigatePortfolio} />
+          <Button label="VIEW" url="/portfolio" onClick={navigatePortfolio} />
         </Box>
       </Box>
       <VideoLightboxModal

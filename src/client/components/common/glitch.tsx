@@ -54,11 +54,12 @@ const Glitch: React.FunctionComponent<React.PropsWithChildren<GlitchProps>> = (p
     }
   }
 
-  const { onClick } = props
+  const { url, onClick } = props
   const { hover } = state
   return (
     <Box
-      component="button"
+      component="a"
+      href={url}
       onClick={onClick}
       onMouseEnter={onMouseEvent}
       onMouseLeave={onMouseEvent}
@@ -102,6 +103,7 @@ const Glitch: React.FunctionComponent<React.PropsWithChildren<GlitchProps>> = (p
   )
 }
 type GlitchProps = {
+  url?: string
   onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>
 }
 type GlitchState = {

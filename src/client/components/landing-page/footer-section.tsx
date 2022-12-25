@@ -3,6 +3,8 @@ import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
 
+import Glitch from '../common/glitch'
+
 const FooterSection: React.FunctionComponent = () => {
   const theme = useTheme()
   return (
@@ -34,7 +36,7 @@ const FooterSection: React.FunctionComponent = () => {
             Copyright © 2022 Rokunin Studio Reserved
           </Typography>
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '32px' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '32px' }}>
           {[
             {
               text: 'Terms of Service',
@@ -43,18 +45,14 @@ const FooterSection: React.FunctionComponent = () => {
               text: 'Privacy Policy',
             },
           ].map((button) => (
-            <Box
-              key={button.text}
-              component="button"
-              sx={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
-            >
+            <Glitch key={button.text}>
               <Typography
                 level="body1"
                 sx={{ fontFamily: ['Bank Gothic', 'sans-serif'].join(','), color: theme.palette.text.secondary }}
               >
                 {button.text}
               </Typography>
-            </Box>
+            </Glitch>
           ))}
         </Box>
       </Box>

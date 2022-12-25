@@ -98,7 +98,7 @@ const NavigationBar: React.FunctionComponent<NavigationBarProps> = (props) => {
             padding: '64px',
           }}
         >
-          <Glitch onClick={navigateHome}>
+          <Glitch url="/" onClick={navigateHome}>
             <img
               src={RokuninLogo}
               style={{
@@ -167,21 +167,25 @@ const NavigationBar: React.FunctionComponent<NavigationBarProps> = (props) => {
           {
             label: 'Facebook',
             icon: FacebookLogo,
+            url: 'https://www.facebook.com/TeamRokunin',
           },
           {
             label: 'Twitter',
             icon: TwitterLogo,
+            url: 'https://twitter.com/teamrokunin',
           },
           {
             label: 'LinkedIn',
             icon: LinkedInLogo,
+            url: 'https://www.linkedin.com/in/team-rokunin-224553200',
           },
           {
             label: 'Instagram',
             icon: InstagramLogo,
+            url: 'https://www.instagram.com/teamrokunin',
           },
         ].map((button) => (
-          <Glitch key={button.label}>
+          <Glitch key={button.label} url={button.url} onClick={() => window.open(button.url, '_self')}>
             <Box
               sx={{
                 width: '64px',
