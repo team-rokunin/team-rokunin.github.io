@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -85,6 +86,27 @@ module.exports = {
     //     },
     //   ],
     // }),
+    ...(process.env.NODE_ENV !== 'development'
+      ? [
+          new WorkboxWebpackPlugin.GenerateSW({
+            cacheId: 'webkunin',
+            clientsClaim: true,
+            skipWaiting: false,
+            maximumFileSizeToCacheInBytes: 1073741824,
+            runtimeCaching: [
+              {
+                urlPattern: new RegExp('^https://firebasestorage\\.googleapis\\.com/'),
+                handler: 'CacheFirst',
+                options: {
+                  cacheableResponse: {
+                    statuses: [0, 200],
+                  },
+                },
+              },
+            ],
+          }),
+        ]
+      : []),
   ],
   devServer: {
     historyApiFallback: true,

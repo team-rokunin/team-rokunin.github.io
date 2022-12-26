@@ -6,6 +6,7 @@ import { CssBaseline } from '@mui/joy'
 import Provider from './store'
 import Router from './components'
 import Import from './components/import'
+import ServiceWorkerRegistrator from './components/service-worker'
 import { useScreenState } from './store/screen'
 
 const ThemeProvider: React.FunctionComponent<React.PropsWithChildren> = (props) => {
@@ -62,12 +63,15 @@ const ThemeProvider: React.FunctionComponent<React.PropsWithChildren> = (props) 
 }
 
 ReactDOM.render(
-  <Provider>
-    <ThemeProvider>
-      <CssBaseline />
-      <Import />
-      <Router />
-    </ThemeProvider>
-  </Provider>,
+  <>
+    <ServiceWorkerRegistrator />
+    <Provider>
+      <ThemeProvider>
+        <CssBaseline />
+        <Import />
+        <Router />
+      </ThemeProvider>
+    </Provider>
+  </>,
   document.getElementById('root')
 )
