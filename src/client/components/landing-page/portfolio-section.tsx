@@ -102,7 +102,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            columnGap: '24px',
+            columnGap: ['xs-phone'].includes(screenType) ? '16px' : '24px',
             padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 46px' : '0',
             margin: '64px auto',
             maxWidth: '952px',
@@ -110,8 +110,8 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
         >
           <Box
             sx={{
-              width: '16px',
-              height: '32px',
+              width: ['xs-phone'].includes(screenType) ? '12px' : '16px',
+              height: ['xs-phone'].includes(screenType) ? '24px' : '32px',
               backgroundColor: theme.palette.primary[400],
               animation: `${headerCursorAnimation} 3s linear infinite`,
             }}

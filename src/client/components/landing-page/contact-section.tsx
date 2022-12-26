@@ -5,6 +5,7 @@ import Typography from '@mui/joy/Typography'
 
 import { useScreenState } from '../../store/screen'
 import { useRefCallback } from '../common/hook'
+import { replaceRGBAlpha } from '../common/color'
 import TextField from '../common/textfield'
 import EmailTextField from '../common/textfield/email'
 import MobileNumberTextField from '../common/textfield/mobile-number'
@@ -44,15 +45,15 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-          columnGap: '24px',
+          columnGap: ['xs-phone'].includes(screenType) ? '16px' : '24px',
           margin: '64px auto',
           maxWidth: '952px',
         }}
       >
         <Box
           sx={{
-            width: '16px',
-            height: '32px',
+            width: ['xs-phone'].includes(screenType) ? '12px' : '16px',
+            height: ['xs-phone'].includes(screenType) ? '24px' : '32px',
             backgroundColor: theme.palette.primary[400],
             animation: `${headerCursorAnimation} 3s linear infinite`,
           }}
@@ -75,6 +76,7 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
       </Typography>
       <Box
         sx={{
+          position: 'relative',
           display: 'grid',
           gridTemplateColumns: ['xs-phone'].includes(screenType) ? '1fr' : 'repeat(2, 1fr)',
           gap: '16px',
@@ -82,6 +84,22 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
           margin: '16px auto',
         }}
       >
+        <Box
+          sx={{
+            position: 'absolute',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: 'calc(100% + 64px)',
+            height: 'calc(100% + 64px)',
+            top: '-32px',
+            left: '-32px',
+            backgroundColor: theme.palette.background.body.replace(...replaceRGBAlpha(0.3)),
+            backdropFilter: 'blur(6px)',
+          }}
+        >
+          <Typography>Success</Typography>
+        </Box>
         <TextField label="First Name" placeholder="Type Here" />
         <TextField label="Last Name" placeholder="Type Here" />
         <EmailTextField label="Email" placeholder="Type Here" />

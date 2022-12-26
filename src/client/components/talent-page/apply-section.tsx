@@ -45,15 +45,15 @@ const ApplySection: React.FunctionComponent<ApplySectionProps> = (props) => {
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-          columnGap: '24px',
+          columnGap: ['xs-phone'].includes(screenType) ? '16px' : '24px',
           margin: '64px auto',
           maxWidth: '952px',
         }}
       >
         <Box
           sx={{
-            width: '16px',
-            height: '32px',
+            width: ['xs-phone'].includes(screenType) ? '12px' : '16px',
+            height: ['xs-phone'].includes(screenType) ? '24px' : '32px',
             backgroundColor: theme.palette.primary[400],
             animation: `${headerCursorAnimation} 3s linear infinite`,
           }}

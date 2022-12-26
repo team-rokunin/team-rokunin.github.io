@@ -15,7 +15,7 @@ const LightForeground: React.FunctionComponent = () => {
         bottom: '4px',
         left: '6px',
         right: '6px',
-        boxShadow: [`inset 0 0 32px ${theme.palette.primary[400]}`, `0 0 128px ${theme.palette.primary[400]}`].join(
+        boxShadow: [`inset 0 0 32px ${theme.palette.text.primary}`, `0 0 128px ${theme.palette.text.primary}`].join(
           ','
         ),
         borderRadius: '16px',
