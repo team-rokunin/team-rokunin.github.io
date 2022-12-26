@@ -33,6 +33,12 @@ const MatrixFileField = React.forwardRef(
       [state.input]
     )
     React.useEffect(() => {
+      if (props.files) {
+        const files = props.files
+        setState((state) => ({ ...state, files }))
+      }
+    }, [props.files])
+    React.useEffect(() => {
       if (state.input) state.input.value = ''
     }, [state.input, state.files])
 
@@ -50,17 +56,20 @@ const MatrixFileField = React.forwardRef(
     const onChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
       const files = Array.from(event.target.files ?? [])
       setState((state) => ({ ...state, files: [...state.files, ...files] }))
+      onChangeFiles?.(files)
     }
 
     const onClick = (index: number) => {
-      setState((state) => ({ ...state, files: state.files.filter((_, fileIndex) => fileIndex !== index) }))
+      const files = state.files.filter((_, fileIndex) => fileIndex !== index)
+      setState((state) => ({ ...state, files }))
+      onChangeFiles?.(files)
     }
 
     const theme = useTheme()
-    const { label, ownerState, ...others } = props
+    const { label, ownerState, files: omitFiles, onChangeFiles, helperText, ...others } = props
     const { focus, files } = state
     return (
-      <MatrixContainer label={label} focus={focus}>
+      <MatrixContainer label={label} helperText={helperText} focus={focus}>
         <Box
           sx={{
             display: 'flex',
@@ -228,6 +237,9 @@ const FileField = React.forwardRef((props: FileFieldProps, ref: React.ForwardedR
 })
 type FileFieldProps = {
   label: string
+  files?: File[]
+  onChangeFiles?: (files: File[]) => void
+  helperText?: string
 }
 
 export default FileField

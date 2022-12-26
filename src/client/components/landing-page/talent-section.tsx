@@ -105,9 +105,11 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
               level="h4"
               sx={{
                 fontSize: '32px',
+                paddingLeft: ['xs-phone'].includes(screenType) ? '0.5em' : '1em',
                 letterSpacing: ['xs-phone'].includes(screenType) ? '0.5em' : '1em',
                 color: theme.palette.primary[400],
                 textAlign: 'center',
+                wordBreak: 'break-word',
               }}
             >
               TALENT

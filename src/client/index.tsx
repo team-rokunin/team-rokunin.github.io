@@ -23,6 +23,9 @@ const ThemeProvider: React.FunctionComponent<React.PropsWithChildren> = (props) 
             400: 'rgba(31, 228, 146, 1)',
             600: 'rgba(22, 156, 115, 1)',
           },
+          danger: {
+            400: 'rgba(249, 111, 109, 1)',
+          },
           background: {
             body: 'rgba(15, 29, 36, 1)',
             level1: 'rgba(15, 80, 68, 1)',

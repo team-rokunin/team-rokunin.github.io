@@ -6,8 +6,9 @@ import ButtonUnstyled, { ButtonUnstyledRootSlotProps, buttonUnstyledClasses } fr
 const SvgButton = React.forwardRef(
   (props: ButtonUnstyledRootSlotProps & ButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) => {
     const theme = useTheme()
-    const { label, url, ownerState, ...others } = props
+    const { label, url, ownerState, color, ...others } = props
     const id = label.replace(/\s/g, '-')
+    const colorPalette = color === 'danger' ? theme.palette.danger[400] : theme.palette.primary[600]
     return (
       <Box
         component="a"
@@ -56,11 +57,11 @@ const SvgButton = React.forwardRef(
             y={0}
             width={235}
             height={64}
-            fill={props.disabled ? 'transparent' : theme.palette.primary[600]}
+            fill={props.disabled ? 'transparent' : colorPalette}
           />
           <polygon
             points="235 16 235 0 0 0 0 48.25 16 64 235 64 235 48 231 44 231 20 235 16"
-            stroke={props.disabled ? theme.palette.text.primary : theme.palette.primary[600]}
+            stroke={props.disabled ? theme.palette.text.primary : colorPalette}
             strokeWidth={3}
             fillOpacity={0}
           />
@@ -72,7 +73,7 @@ const SvgButton = React.forwardRef(
             fontFamily={['Bank Gothic', 'sans-serif'].join(',')}
             letterSpacing="0.3em"
             dominantBaseline="middle"
-            fill={theme.palette.primary[600]}
+            fill={colorPalette}
           >
             {label}
           </text>
@@ -112,6 +113,7 @@ type ButtonProps = {
   url?: string
   onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>
   disabled?: boolean
+  color?: 'primary' | 'danger'
 }
 
 export default Button

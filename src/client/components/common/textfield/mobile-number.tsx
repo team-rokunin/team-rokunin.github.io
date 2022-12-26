@@ -40,10 +40,10 @@ const MatrixMobileNumberField = React.forwardRef(
       }
     }
 
-    const { label, ownerState, ...others } = props
+    const { label, ownerState, helperText, ...others } = props
     const { focus } = state
     return (
-      <MatrixContainer label={label} focus={focus}>
+      <MatrixContainer label={label} helperText={helperText} focus={focus}>
         <MaskedInput
           {...others}
           ref={setRef}
@@ -76,7 +76,10 @@ const MobileNumberTextField = React.forwardRef(
 )
 type MobileNumberTextFieldProps = {
   label: string
+  value?: string
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
   placeholder?: string
+  helperText?: string
 }
 
 export default MobileNumberTextField

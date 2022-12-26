@@ -40,10 +40,10 @@ const MatrixEmailField = React.forwardRef(
       }
     }
 
-    const { label, ownerState, ...others } = props
+    const { label, ownerState, helperText, ...others } = props
     const { focus } = state
     return (
-      <MatrixContainer label={label} focus={focus}>
+      <MatrixContainer label={label} helperText={helperText} focus={focus}>
         <MaskedInput
           {...others}
           ref={setRef}
@@ -81,7 +81,10 @@ const EmailTextField = React.forwardRef((props: EmailTextFieldProps, ref: React.
 })
 type EmailTextFieldProps = {
   label: string
+  value?: string
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
   placeholder?: string
+  helperText?: string
 }
 
 export default EmailTextField

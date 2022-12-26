@@ -5,11 +5,32 @@ import InputUnstyled, { InputUnstyledInputSlotProps } from '@mui/base/InputUnsty
 import TextareaAutosize, { TextareaAutosizeProps } from '@mui/base/TextareaAutosize'
 import { Typography } from '@mui/joy'
 
+import WarningIcon from '../../../../asset/img/warning.svg'
 import { replaceRGBAlpha } from '../color'
 
 export const MatrixContainer: React.FunctionComponent<MatrixContainerProps> = (props) => {
+  const [state, setState] = React.useState<MatrixContainerState>({
+    showHelperText: props.helperText !== undefined,
+    helperText: props.helperText,
+  })
+
+  React.useEffect(() => {
+    if (props.helperText) {
+      setState((state) => ({
+        ...state,
+        showHelperText: true,
+        helperText: props.helperText,
+      }))
+    } else {
+      setState((state) => ({ ...state, showHelperText: false }))
+      const timeout = setTimeout(() => setState((state) => ({ ...state, helperText: undefined })), 160)
+      return () => clearTimeout(timeout)
+    }
+  }, [props.helperText])
+
   const theme = useTheme()
   const { label, focus, children } = props
+  const { showHelperText, helperText } = state
   const color = theme.palette.primary[400]
   return (
     <Box
@@ -21,6 +42,9 @@ export const MatrixContainer: React.FunctionComponent<MatrixContainerProps> = (p
     >
       <Box
         sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          columnGap: '16px',
           padding: '4px 12px',
           borderBottom: `1px solid ${color}`,
           transition: 'box-shadow 160ms ease-in-out',
@@ -30,6 +54,26 @@ export const MatrixContainer: React.FunctionComponent<MatrixContainerProps> = (p
         <Typography level="body1" sx={{ color }}>
           {label}
         </Typography>
+        <Box
+          sx={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            columnGap: '8px',
+            opacity: showHelperText ? 1 : 0,
+            transition: 'opacity 160ms ease-in-out',
+          }}
+        >
+          <img src={WarningIcon} style={{ width: '18px' }} />
+          <Typography
+            level="body3"
+            sx={{ height: '1.5em', color: theme.palette.text.primary, textOverflow: 'ellipsis', overflow: 'hidden' }}
+          >
+            {helperText}
+          </Typography>
+        </Box>
       </Box>
       <Box
         sx={{
@@ -63,8 +107,13 @@ export const MatrixContainer: React.FunctionComponent<MatrixContainerProps> = (p
 }
 type MatrixContainerProps = React.PropsWithChildren<{
   label: string
+  helperText?: string
   focus: boolean
 }>
+type MatrixContainerState = {
+  showHelperText: boolean
+  helperText?: string
+}
 
 const MatrixTextField = React.forwardRef(
   (props: InputUnstyledInputSlotProps & TextFieldProps, ref: React.ForwardedRef<HTMLInputElement>) => {
@@ -81,10 +130,10 @@ const MatrixTextField = React.forwardRef(
       }
     }
 
-    const { label, ownerState, ...others } = props
+    const { label, ownerState, helperText, ...others } = props
     const { focus } = state
     return (
-      <MatrixContainer label={label} focus={focus}>
+      <MatrixContainer label={label} helperText={helperText} focus={focus}>
         <input {...others} onFocus={onFocus} onBlur={onFocus} ref={ref} />
       </MatrixContainer>
     )
@@ -108,10 +157,10 @@ const MatrixTextArea = React.forwardRef(
       }
     }
 
-    const { label, ownerState, minRows, maxRows, ...others } = props
+    const { label, ownerState, helperText, minRows, maxRows, ...others } = props
     const { focus } = state
     return (
-      <MatrixContainer label={label} focus={focus}>
+      <MatrixContainer label={label} helperText={helperText} focus={focus}>
         <TextareaAutosize {...others} ref={ref} onFocus={onFocus} onBlur={onFocus} style={{ resize: 'none' }} />
       </MatrixContainer>
     )
@@ -134,7 +183,10 @@ const TextField = React.forwardRef((props: TextFieldProps, ref: React.ForwardedR
 })
 type TextFieldProps = {
   label: string
+  value?: string
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
   placeholder?: string
+  helperText?: string
   multiline?: boolean
 }
 
