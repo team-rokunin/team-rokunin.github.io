@@ -54,7 +54,7 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
       setState((state) => ({ ...state, input: { ...state.input, [key]: event.target.value } }))
     }
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const { input } = state
     const error: ContactSectionState['error'] = {}
     if (input.firstName === '') {
@@ -73,6 +73,14 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
       error.companyName = 'Please complete field'
     }
     setState((state) => ({ ...state, error }))
+    if (Object.keys(error).length === 0) {
+      try {
+        await submitContact(input)
+        setState((state) => ({ ...state, result: 'success' }))
+      } catch {
+        setState((state) => ({ ...state, result: 'error' }))
+      }
+    }
   }
 
   const onReset = () => {

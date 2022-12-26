@@ -219,7 +219,10 @@ const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
               }}
             />
           </Box>
-          <Typography level="body1" sx={{ fontSize: '12px', color: theme.palette.text.primary }}>
+          <Typography
+            level="body1"
+            sx={{ fontSize: theme.typography.body3.fontSize, color: theme.palette.text.primary }}
+          >
             scroll down
           </Typography>
         </Box>

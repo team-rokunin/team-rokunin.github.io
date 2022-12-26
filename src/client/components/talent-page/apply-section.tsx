@@ -59,11 +59,10 @@ const ApplySection: React.FunctionComponent<ApplySectionProps> = (props) => {
   const onChangeFiles =
     <T extends 'resume'>(key: T) =>
     (files: File[]) => {
-      console.log(files)
       setState((state) => ({ ...state, input: { ...state.input, [key]: files } }))
     }
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const { input } = state
     const error: ApplySectionState['error'] = {}
     if (input.firstName === '') {
@@ -82,6 +81,14 @@ const ApplySection: React.FunctionComponent<ApplySectionProps> = (props) => {
       error.resume = 'Please upload at least 1 file'
     }
     setState((state) => ({ ...state, error }))
+    if (Object.keys(error).length === 0) {
+      try {
+        await submitApplication(input)
+        setState((state) => ({ ...state, result: 'success' }))
+      } catch {
+        setState((state) => ({ ...state, result: 'error' }))
+      }
+    }
   }
 
   const onReset = () => {
