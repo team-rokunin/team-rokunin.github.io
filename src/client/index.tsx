@@ -1,5 +1,5 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import * as ReactDOM from 'react-dom/client'
 import { CssVarsProvider, extendTheme } from '@mui/joy/styles'
 import { CssBaseline } from '@mui/joy'
 
@@ -62,16 +62,19 @@ const ThemeProvider: React.FunctionComponent<React.PropsWithChildren> = (props) 
   return <CssVarsProvider theme={theme}>{children}</CssVarsProvider>
 }
 
-ReactDOM.render(
-  <>
-    <ServiceWorkerRegistrator />
-    <Provider>
-      <ThemeProvider>
-        <CssBaseline />
-        <Import />
-        <Router />
-      </ThemeProvider>
-    </Provider>
-  </>,
-  document.getElementById('root')
-)
+const rootElement = document.getElementById('root')
+if (rootElement) {
+  const root = ReactDOM.createRoot(rootElement)
+  root.render(
+    <>
+      <ServiceWorkerRegistrator />
+      <Provider>
+        <ThemeProvider>
+          <CssBaseline />
+          <Import />
+          <Router />
+        </ThemeProvider>
+      </Provider>
+    </>
+  )
+}

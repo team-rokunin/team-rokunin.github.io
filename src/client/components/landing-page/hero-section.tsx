@@ -154,6 +154,7 @@ const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
       <Box
         component="video"
         ref={videoRef}
+        autoPlay
         playsInline
         muted
         onLoadedData={onVideoLoaded}

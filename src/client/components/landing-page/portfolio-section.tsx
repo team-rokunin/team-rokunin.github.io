@@ -310,6 +310,7 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
       <Box
         component="video"
         ref={videoRef}
+        autoPlay
         playsInline
         muted
         onLoadedData={onVideoLoaded}

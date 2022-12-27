@@ -99,7 +99,7 @@ module.exports = {
                 options: {
                   cacheName: 'precache-v2',
                   matchOptions: { ignoreSearch: true },
-                  cacheableResponse: { statuses: [200] },
+                  cacheableResponse: { statuses: [200, 206] },
                   rangeRequests: true,
                 },
               },
