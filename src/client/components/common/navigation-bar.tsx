@@ -214,11 +214,11 @@ const NavigationBar: React.FunctionComponent<NavigationBarProps> = (props) => {
                     theme.palette.primary[400].replace(...replaceRGBAlpha(0.3)),
                     `${theme.palette.primary[400].replace(...replaceRGBAlpha(0))} 2% 12%`,
                     `${theme.palette.primary[400].replace(...replaceRGBAlpha(0.2))} 14%`,
-                    `${theme.palette.primary[400].replace(...replaceRGBAlpha(0))} 16%`,
+                    `${theme.palette.primary[400].replace(...replaceRGBAlpha(0.1))} 16%`,
                     `${theme.palette.primary[400].replace(...replaceRGBAlpha(0.2))} 18%`,
                     `${theme.palette.primary[400].replace(...replaceRGBAlpha(0))} 22% 74%`,
-                    `${theme.palette.primary[400].replace(...replaceRGBAlpha(0.1))} 82%`,
-                    `${theme.palette.primary[400].replace(...replaceRGBAlpha(0))} 96%`,
+                    `${theme.palette.primary[400].replace(...replaceRGBAlpha(0.3))} 82%`,
+                    `${theme.palette.primary[400].replace(...replaceRGBAlpha(0.2))} 96%`,
                   ].join(',')})`,
                 }}
               />
@@ -306,9 +306,10 @@ const NavigationBar: React.FunctionComponent<NavigationBarProps> = (props) => {
                   height: '100%',
                   background: `linear-gradient(${[
                     'to bottom',
-                    `${theme.palette.primary[400].replace(...replaceRGBAlpha(0))} 38%`,
-                    `${theme.palette.primary[400].replace(...replaceRGBAlpha(0.1))} 42% 56%`,
-                    `${theme.palette.primary[400].replace(...replaceRGBAlpha(0))} 64%`,
+                    `${theme.palette.primary[400].replace(...replaceRGBAlpha(0))} 32%`,
+                    `${theme.palette.primary[400].replace(...replaceRGBAlpha(0.2))} 38% 52%`,
+                    `${theme.palette.primary[400].replace(...replaceRGBAlpha(0))} 58% 72%`,
+                    `${theme.palette.primary[400].replace(...replaceRGBAlpha(0.3))} 86%`,
                   ].join(',')})`,
                 }}
               />

@@ -2,8 +2,6 @@ import * as React from 'react'
 import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
 
-import { replaceRGBAlpha } from './color'
-
 const LightForeground: React.FunctionComponent = () => {
   const theme = useTheme()
   return (
@@ -19,7 +17,6 @@ const LightForeground: React.FunctionComponent = () => {
           ','
         ),
         borderRadius: '16px',
-        filter: 'brightness(180%)',
         zIndex: 10000,
         pointerEvents: 'none',
       }}

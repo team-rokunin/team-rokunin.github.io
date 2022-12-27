@@ -97,7 +97,10 @@ module.exports = {
                 urlPattern: new RegExp('^https://firebasestorage\\.googleapis\\.com/'),
                 handler: 'CacheFirst',
                 options: {
-                  cacheName: 'videos',
+                  cacheName: 'precache-v2',
+                  matchOptions: { ignoreSearch: true },
+                  cacheableResponse: { statuses: [200] },
+                  rangeRequests: true,
                 },
               },
             ],
@@ -107,5 +110,6 @@ module.exports = {
   ],
   devServer: {
     historyApiFallback: true,
+    allowedHosts: 'all',
   },
 }
