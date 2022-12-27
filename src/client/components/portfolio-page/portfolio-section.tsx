@@ -1,5 +1,6 @@
 import * as React from 'react'
 import SwipeableViews from 'react-swipeable-views'
+import { virtualize } from 'react-swipeable-views-utils'
 import { useTheme } from '@mui/joy/styles'
 import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
@@ -11,6 +12,8 @@ import { replaceRGBAlpha } from '../common/color'
 import VideoLightboxModal from '../common/lightbox'
 import { headerCursorAnimation } from './'
 import { VideoDemo } from '../landing-page/portfolio-section'
+
+const VirtualizeSwipeableViews = virtualize(SwipeableViews)
 
 const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props) => {
   const [{ type: screenType }] = useScreenState()
@@ -126,6 +129,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
       </Typography>
     </Box>
   )
+  const pagesLength = Math.ceil(videos.length / videosLength)
   return (
     <>
       <Box
@@ -193,26 +197,15 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
           Our team of animators and artists consists of highly talented people who are well-versed in their respective
           fields, capable of providing quality service and ensure your game stand out visually.
         </Typography>
-        <SwipeableViews
+        <VirtualizeSwipeableViews
           index={currentPage}
           onChangeIndex={onChangePage}
-          style={{
-            maxWidth: '1016px',
-            margin: '96px auto 16px',
-          }}
-        >
-          {videos
-            .reduce((pages, video) => {
-              const lastPage = pages[pages.length - 1]
-              if (lastPage && lastPage.length < videosLength) {
-                return [...pages.slice(0, -1), [...lastPage, video]]
-              } else {
-                return [...pages, [video]]
-              }
-            }, [] as typeof videos[])
-            .map((page, index) => (
+          slideCount={pagesLength}
+          slideRenderer={({ index, key }) => {
+            const pageVideos = videos.slice(index * videosLength, (index + 1) * videosLength)
+            return (
               <Box
-                key={index}
+                key={key}
                 sx={{
                   display: 'grid',
                   gridTemplateColumns: ['xs-phone'].includes(screenType) ? '1fr' : 'repeat(2, 1fr)',
@@ -220,19 +213,24 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
                   padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 46px' : '0 32px',
                 }}
               >
-                {page.map((demo, index) => (
+                {pageVideos.map((demo, index) => (
                   <Box key={demo.title} onClick={() => openVideoModal(demo.video)}>
                     <VideoDemo
                       ref={(video) => setVideoRef(demo.video, video)}
                       title={demo.title}
-                      video={demo.video}
+                      video={demo.thumbnail}
                       playState={playing[index] ? 'playing' : 'paused'}
                     />
                   </Box>
                 ))}
               </Box>
-            ))}
-        </SwipeableViews>
+            )
+          }}
+          style={{
+            maxWidth: '1016px',
+            margin: '96px auto 16px',
+          }}
+        />
         <Box
           sx={{
             display: 'flex',
@@ -242,7 +240,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
           }}
         >
           {navigationButton('<', currentPage > 0 ? currentPage - 1 : undefined)}
-          {Array(Math.ceil(videos.length / videosLength))
+          {Array(pagesLength)
             .fill(undefined)
             .map((_, index) => (
               <Box

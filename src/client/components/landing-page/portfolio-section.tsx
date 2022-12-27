@@ -166,7 +166,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
               <VideoDemo
                 ref={(video) => setVideoRef(demo.video, video)}
                 title={demo.title}
-                video={demo.video}
+                video={demo.thumbnail}
                 playState={playing[index] ? 'playing' : 'paused'}
               />
             </Box>

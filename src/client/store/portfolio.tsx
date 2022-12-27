@@ -14,6 +14,7 @@ export type State = {
   videos: {
     title: string
     video: string
+    thumbnail: string
   }[]
 }
 const PortfolioContext = React.createContext([{} as State] as const)
@@ -33,13 +34,15 @@ export const Provider: React.FunctionComponent<React.PropsWithChildren> = (props
     const databaseRef = Database.ref(database, 'portfolios')
     Database.get(databaseRef)
       .then((snapshot) => {
-        const values = snapshot.val() as { title: string; video: string }[]
+        const values = snapshot.val() as { title: string; video: string; thumbnail: string }[]
         return Promise.all(
           values.reverse().map(async (value) => {
-            const storageRef = Storage.ref(storage, value.video)
+            const videoRef = Storage.ref(storage, value.video)
+            const thumbnailRef = Storage.ref(storage, value.thumbnail)
             return {
               title: value.title,
-              video: await Storage.getDownloadURL(storageRef),
+              video: await Storage.getDownloadURL(videoRef),
+              thumbnail: await Storage.getDownloadURL(thumbnailRef),
             }
           })
         )
