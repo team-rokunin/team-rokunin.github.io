@@ -84,7 +84,7 @@ const CareerSection: React.FunctionComponent<CareerSectionProps> = (props) => {
           <Box
             key={career.title}
             component="fieldset"
-            sx={{ borderColor: theme.palette.primary[400], padding: '6px 16px 16px' }}
+            sx={{ border: `1px solid ${theme.palette.primary[400]}`, padding: '6px 16px 16px' }}
           >
             <Typography component="legend" level="h4" sx={{ padding: '0 16px' }}>
               {career.title}
@@ -93,6 +93,7 @@ const CareerSection: React.FunctionComponent<CareerSectionProps> = (props) => {
               component="ul"
               sx={{
                 listStyle: 'none',
+                margin: '16px 0',
                 paddingLeft: '32px',
                 ['& li']: {
                   paddingLeft: '12px',
