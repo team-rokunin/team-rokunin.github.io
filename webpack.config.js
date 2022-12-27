@@ -91,17 +91,11 @@ module.exports = {
           new WorkboxWebpackPlugin.GenerateSW({
             cacheId: 'webkunin',
             clientsClaim: true,
-            skipWaiting: false,
             maximumFileSizeToCacheInBytes: 1073741824,
             runtimeCaching: [
               {
                 urlPattern: new RegExp('^https://firebasestorage\\.googleapis\\.com/'),
                 handler: 'CacheFirst',
-                options: {
-                  cacheableResponse: {
-                    statuses: [0, 200],
-                  },
-                },
               },
             ],
           }),
