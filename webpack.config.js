@@ -96,6 +96,9 @@ module.exports = {
               {
                 urlPattern: new RegExp('^https://firebasestorage\\.googleapis\\.com/'),
                 handler: 'CacheFirst',
+                options: {
+                  cacheName: 'videos',
+                },
               },
             ],
           }),

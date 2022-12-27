@@ -46,6 +46,7 @@ const GrainBackground: React.FunctionComponent = () => {
         background: theme.palette.background.body,
         zIndex: -1,
         pointerEvents: 'none',
+        overflow: 'hidden',
       }}
     >
       <Box
