@@ -299,12 +299,15 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
         height: '240px',
         cursor: playState !== 'loading' ? 'pointer' : 'default',
         overflow: 'hidden',
-        backgroundColor: 'black',
+        backgroundColor: 'rgb(0, 0, 0)',
+        opacity: playState === 'playing' ? 1 : 0.2,
+        transition: 'opacity 3s ease-in-out',
         ['& .filter']: {
-          backgroundColor: theme.palette.text.primary,
+          transition: 'background-color 160ms ease-in-out',
+          backgroundColor: theme.palette.primary[400].replace(...replaceRGBAlpha(0.2)),
         },
         ['&:hover .filter']: {
-          backgroundColor: theme.palette.text.primary.replace(...replaceRGBAlpha(0)),
+          backgroundColor: theme.palette.primary[400].replace(...replaceRGBAlpha(0)),
         },
       }}
     >
@@ -338,7 +341,17 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
           width: '100%',
           height: '100%',
           transition: 'background-color 160ms ease-in-out',
-          mixBlendMode: 'overlay',
+          zIndex: 1,
+        }}
+      />
+      <Box
+        sx={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          opacity: playState === 'playing' ? 1 : 0,
+          transition: 'opacity 160ms ease-in-out',
+          zIndex: 2,
         }}
       >
         {[

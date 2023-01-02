@@ -18,9 +18,9 @@ const LinedForeground: React.FunctionComponent = () => {
         background: [
           `linear-gradient(${[
             `${theme.palette.primary[400].replace(...replaceRGBAlpha(0))} 50%`,
-            'rgba(0, 0, 0, 0.25) 50%',
+            'rgba(0, 0, 0, 0.3) 50%',
           ].join(',')})`,
-          `linear-gradient(90deg, ${['rgba(255, 0, 0, 0.06)', 'rgba(0, 255, 0, 0.06)', 'rgba(0, 0, 255, 0.06)'].join(
+          `linear-gradient(90deg, ${['rgba(255, 0, 0, 0.12)', 'rgba(0, 255, 0, 0.12)', 'rgba(0, 0, 255, 0.12)'].join(
             ','
           )})`,
         ].join(','),
