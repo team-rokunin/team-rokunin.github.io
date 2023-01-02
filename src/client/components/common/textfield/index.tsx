@@ -6,9 +6,11 @@ import TextareaAutosize, { TextareaAutosizeProps } from '@mui/base/TextareaAutos
 import { Typography } from '@mui/joy'
 
 import WarningIcon from '../../../../asset/img/warning.svg'
+import { useScreenState } from '../../../store/screen'
 import { replaceRGBAlpha } from '../color'
 
 export const MatrixContainer: React.FunctionComponent<MatrixContainerProps> = (props) => {
+  const [{ type: screenType }] = useScreenState()
   const [state, setState] = React.useState<MatrixContainerState>({
     showHelperText: props.helperText !== undefined,
     helperText: props.helperText,
@@ -82,7 +84,7 @@ export const MatrixContainer: React.FunctionComponent<MatrixContainerProps> = (p
           transition: 'box-shadow 160ms ease-in-out',
           boxShadow: focus ? `inset 0 0 16px ${color.replace(...replaceRGBAlpha(0.3))}` : undefined,
           ['& span']: {
-            fontSize: '20px',
+            fontSize: ['xs-phone'].includes(screenType) ? '16px' : '18px',
             fontFamily: theme.typography.body1.fontFamily as React.CSSProperties['fontFamily'],
             color,
           },
@@ -91,7 +93,7 @@ export const MatrixContainer: React.FunctionComponent<MatrixContainerProps> = (p
             border: 'none',
             outline: 'none',
             background: 'transparent',
-            fontSize: '20px',
+            fontSize: ['xs-phone'].includes(screenType) ? '16px' : '18px',
             fontFamily: theme.typography.body1.fontFamily as React.CSSProperties['fontFamily'],
             color: theme.palette.text.primary,
           },

@@ -7,6 +7,7 @@ import Typography from '@mui/joy/Typography'
 import { useScreenState } from '../../store/screen'
 import { usePortfolioState } from '../../store/portfolio'
 import { useRefCallback } from '../common/hook'
+import { replaceRGBAlpha } from '../common/color'
 import Button from '../common/button'
 import VideoLightboxModal from '../common/lightbox'
 import { headerCursorAnimation } from './'
@@ -300,10 +301,10 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
         overflow: 'hidden',
         backgroundColor: 'black',
         ['& .filter']: {
-          backgroundColor: 'rgba(60, 249, 160, 0.1)',
+          backgroundColor: theme.palette.text.primary,
         },
         ['&:hover .filter']: {
-          backgroundColor: 'rgba(60, 249, 160, 0)',
+          backgroundColor: theme.palette.text.primary.replace(...replaceRGBAlpha(0)),
         },
       }}
     >
@@ -332,7 +333,13 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
       </Box>
       <Box
         className="filter"
-        sx={{ position: 'absolute', width: '100%', height: '100%', transition: 'background-color 160ms ease-in-out' }}
+        sx={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          transition: 'background-color 160ms ease-in-out',
+          mixBlendMode: 'overlay',
+        }}
       >
         {[
           ['top', 'left'],
