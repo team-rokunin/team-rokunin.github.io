@@ -37,6 +37,7 @@ const backgroundMovingAnimation = keyframes`
 `
 const GrainBackground: React.FunctionComponent = () => {
   const theme = useTheme()
+  const isAndroid = navigator.userAgent.toLowerCase().includes('android')
   return (
     <Box
       sx={{
@@ -60,7 +61,7 @@ const GrainBackground: React.FunctionComponent = () => {
           backgroundImage: 'url(https://grainy-gradients.vercel.app/noise.svg)',
           backgroundRepeat: 'repeat',
           backgroundSize: '1000px 1000px',
-          animation: `${backgroundMovingAnimation} 24s steps(5) infinite`,
+          animation: !isAndroid ? `${backgroundMovingAnimation} 24s steps(5) infinite` : undefined,
           filter: 'contrast(150%) brightness(320%)',
           mixBlendMode: 'multiply',
         }}

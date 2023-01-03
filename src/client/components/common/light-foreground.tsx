@@ -4,9 +4,10 @@ import Box from '@mui/joy/Box'
 
 const LightForeground: React.FunctionComponent = () => {
   const theme = useTheme()
+  const isAndroid = navigator.userAgent.toLowerCase().includes('android')
   return (
     <>
-      {Array(3)
+      {Array(!isAndroid ? 3 : 1)
         .fill(undefined)
         .map((_, index) => (
           <Box
@@ -23,7 +24,7 @@ const LightForeground: React.FunctionComponent = () => {
                 `0 0 16px 2px ${theme.palette.text.primary}`,
               ].join(','),
               borderRadius: '16px',
-              mixBlendMode: 'overlay',
+              mixBlendMode: !isAndroid ? 'overlay' : undefined,
               zIndex: 10000,
               pointerEvents: 'none',
             }}
