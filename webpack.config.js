@@ -101,6 +101,9 @@ module.exports = {
                   matchOptions: { ignoreSearch: true },
                   cacheableResponse: { statuses: [200, 206] },
                   rangeRequests: true,
+                  expiration: {
+                    maxAgeSeconds: 24 * 60 * 60,
+                  },
                 },
               },
             ],

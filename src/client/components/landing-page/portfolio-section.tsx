@@ -43,25 +43,28 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
         playing[Math.floor(Math.random() * videosLength)] = true
       }
       setState((state) => ({ ...state, playing }))
+      setTimeout(playAll, 1000)
     }
-    startRandomlyPausePlay()
+    startRandomlyPause()
   }, [])
 
-  const randomlyPausePlay = () => {
+  const randomlyPause = () => {
     setState((state) => {
       const playing = [...state.playing]
       const index = Math.floor(Math.random() * videosLength)
       playing[index] = !playing[index]
-      return !playing.every((playing) => !playing) && (playing[index] || Math.random() > 0.5)
+      return !playing.every((playing) => !playing) && Math.random() > 0.5
         ? {
             ...state,
             playing,
           }
         : state
     })
-    startRandomlyPausePlay()
+    setTimeout(playAll, 1000)
+    startRandomlyPause()
   }
-  const startRandomlyPausePlay = () => setTimeout(randomlyPausePlay, Math.round(Math.random() * 3 + 1) * 500)
+  const playAll = () => setState((state) => ({ ...state, playing: state.playing.map(() => true) }))
+  const startRandomlyPause = () => setTimeout(randomlyPause, Math.round(Math.random() * 3 + 6) * 1000)
 
   const videoAnchors = React.useRef<Record<string, HTMLElement>>({})
   const setVideoRef = React.useCallback((link: string, node: HTMLElement | null) => {
