@@ -27,10 +27,6 @@ const HeaderText: React.FC<HeaderTextProps> = (props) => {
 
   const typographyRef = useRefCallback((node) => {
     if (!state.appear) {
-      const timeout = setTimeout(() => {
-        const dimension = node.getBoundingClientRect()
-        setState((state) => ({ ...state, width: dimension.width }))
-      }, 160)
       const onScroll = () => {
         const dimension = node.getBoundingClientRect()
         if (dimension.top + dimension.height < window.innerHeight) {
@@ -44,6 +40,11 @@ const HeaderText: React.FC<HeaderTextProps> = (props) => {
           )
         }
       }
+      const timeout = setTimeout(() => {
+        const dimension = node.getBoundingClientRect()
+        setState((state) => ({ ...state, width: dimension.width }))
+        onScroll()
+      }, 160)
       document.addEventListener('scroll', onScroll)
       return () => {
         clearTimeout(timeout)
@@ -67,6 +68,7 @@ const HeaderText: React.FC<HeaderTextProps> = (props) => {
         alignItems: 'center',
         margin: '64px auto',
         maxWidth: '952px',
+        opacity: appear ? 1 : 0,
       }}
     >
       <Box
@@ -75,11 +77,13 @@ const HeaderText: React.FC<HeaderTextProps> = (props) => {
           position: 'relative',
           backgroundColor: appear ? 'transparent' : theme.palette.primary[400],
           transform: appear ? 'translateX(0)' : `translateX(${width / 2}px)`,
-          transition: [
-            'width 640ms ease-in-out 640ms',
-            'background-color 640ms ease-in-out 640ms',
-            'transform 640ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-          ].join(','),
+          transition: appear
+            ? [
+                'width 640ms ease-in-out 640ms',
+                'background-color 640ms ease-in-out 640ms',
+                'transform 640ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+              ].join(',')
+            : undefined,
         }}
       >
         <Box
@@ -98,7 +102,7 @@ const HeaderText: React.FC<HeaderTextProps> = (props) => {
           position: 'relative',
           overflow: 'hidden',
           transform: appear ? 'translateX(0)' : `translateX(-${width / 2}px)`,
-          transition: 'transform 640ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          transition: appear ? 'transform 640ms cubic-bezier(0.25, 0.46, 0.45, 0.94)' : undefined,
         }}
       >
         <Typography
@@ -107,7 +111,7 @@ const HeaderText: React.FC<HeaderTextProps> = (props) => {
             color: theme.palette.text.primary,
             padding: `0 ${['xs-phone'].includes(screenType) ? 12 : 24}px`,
             transform: appear ? 'translateX(0)' : `translateX(${width}px)`,
-            transition: 'transform 640ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            transition: appear ? 'transform 640ms cubic-bezier(0.25, 0.46, 0.45, 0.94)' : undefined,
           }}
         >
           {props.text}
@@ -118,11 +122,13 @@ const HeaderText: React.FC<HeaderTextProps> = (props) => {
           ...cursorDimension,
           backgroundColor: appear ? 'transparent' : theme.palette.primary[400],
           transform: appear ? 'translateX(0)' : `translateX(${-width / 2}px)`,
-          transition: [
-            'width 640ms ease-in-out 640ms',
-            'background-color 640ms ease-in-out 640ms',
-            'transform 640ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-          ].join(','),
+          transition: appear
+            ? [
+                'width 640ms ease-in-out 640ms',
+                'background-color 640ms ease-in-out 640ms',
+                'transform 640ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+              ].join(',')
+            : undefined,
         }}
       />
     </Box>
