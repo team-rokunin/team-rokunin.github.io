@@ -100,7 +100,9 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
           padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '46px 0' : '64px 192px',
         }}
       >
-        <HeaderText text="WE ARE ROKUNIN" />
+        <Box sx={{ padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 46px' : '0' }}>
+          <HeaderText text="WE ARE ROKUNIN" />
+        </Box>
         <Typography
           level="h4"
           sx={{

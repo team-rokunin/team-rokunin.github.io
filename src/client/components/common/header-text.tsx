@@ -65,7 +65,6 @@ const HeaderText: React.FC<HeaderTextProps> = (props) => {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 46px' : '0',
         margin: '64px auto',
         maxWidth: '952px',
       }}
@@ -106,7 +105,7 @@ const HeaderText: React.FC<HeaderTextProps> = (props) => {
           level="h3"
           sx={{
             color: theme.palette.text.primary,
-            padding: `0 ${['xs-phone'].includes(screenType) ? 16 : 24}px`,
+            padding: `0 ${['xs-phone'].includes(screenType) ? 12 : 24}px`,
             transform: appear ? 'translateX(0)' : `translateX(${width}px)`,
             transition: 'transform 640ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
           }}
