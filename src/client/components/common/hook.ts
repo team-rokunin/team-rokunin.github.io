@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-export const useRefCallback = <T extends HTMLElement>(callback: (ref: T) => (() => void) | undefined) => {
+export const useRefCallback = <T extends HTMLElement>(callback: (ref: T) => (() => void) | void) => {
   const ref = React.useRef<T | undefined>()
   let cleanup: ReturnType<typeof callback> | undefined = undefined
   const setRef = React.useCallback((node: T | null) => {
@@ -10,5 +10,5 @@ export const useRefCallback = <T extends HTMLElement>(callback: (ref: T) => (() 
     }
     ref.current = node ?? undefined
   }, [])
-  return setRef
+  return [setRef, ref.current] as const
 }

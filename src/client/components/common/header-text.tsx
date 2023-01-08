@@ -25,7 +25,7 @@ const HeaderText: React.FC<HeaderTextProps> = (props) => {
     width: 0,
   })
 
-  const typographyRef = useRefCallback((node) => {
+  const [typographyRef] = useRefCallback((node) => {
     if (!state.appear) {
       const onScroll = () => {
         const dimension = node.getBoundingClientRect()

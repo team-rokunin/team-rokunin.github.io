@@ -20,7 +20,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
     playing: [],
     videoAnchors: {},
   })
-  const containerRef = useRefCallback((node) => {
+  const [containerRef] = useRefCallback((node) => {
     if (props.onResize && node) {
       const onResize = props.onResize
       onResize(node.getBoundingClientRect())
@@ -204,7 +204,9 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
     playState: 'loading',
     controlled: false,
   })
-  const videoRef = React.useRef<HTMLVideoElement>(null)
+  const [setVideoRef, videoRef] = useRefCallback<HTMLVideoElement>((node) => {
+    node.play()
+  })
 
   React.useEffect(() => {
     if (!state.controlled && !['loading', 'stopped'].includes(state.playState)) {
@@ -216,7 +218,7 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
   }, [props.playState, state.playState, state.controlled])
 
   React.useEffect(() => {
-    const video = videoRef.current
+    const video = videoRef
     if (state.playState === 'paused') {
       video?.pause()
     } else if (state.playState === 'playing') {
@@ -225,7 +227,7 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
   }, [state.playState])
 
   const onVideoLoaded = () => {
-    const video = videoRef.current
+    const video = videoRef
     if (video) {
       setState((state) => ({
         ...state,
@@ -234,7 +236,7 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
     }
   }
   const onVideoEnded = () => {
-    const video = videoRef.current
+    const video = videoRef
     setState((state) => ({
       ...state,
       playState: 'stopped',
@@ -290,7 +292,7 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
     >
       <Box
         component="video"
-        ref={videoRef}
+        ref={setVideoRef}
         autoPlay
         playsInline
         muted

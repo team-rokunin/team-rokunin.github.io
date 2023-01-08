@@ -23,7 +23,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
     videoAnchors: {},
     currentPage: 0,
   })
-  const containerRef = useRefCallback((node) => {
+  const [containerRef] = useRefCallback((node) => {
     if (props.onResize && node) {
       const onResize = props.onResize
       onResize(node.getBoundingClientRect())

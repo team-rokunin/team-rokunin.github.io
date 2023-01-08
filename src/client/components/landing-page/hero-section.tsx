@@ -77,7 +77,7 @@ const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
     playState: 'loading',
   })
   const videoRef = React.useRef<HTMLVideoElement>(null)
-  const containerRef = useRefCallback((node) => {
+  const [containerRef] = useRefCallback((node) => {
     if (props.onResize && node) {
       const onResize = props.onResize
       onResize(node.getBoundingClientRect())

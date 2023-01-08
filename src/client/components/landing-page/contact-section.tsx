@@ -29,7 +29,7 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
     result: submission.contact ? 'success' : undefined,
   })
 
-  const containerRef = useRefCallback((node) => {
+  const [containerRef] = useRefCallback((node) => {
     if (props.onResize && node) {
       const onResize = props.onResize
       onResize(node.getBoundingClientRect())

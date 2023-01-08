@@ -12,7 +12,7 @@ const CareerSection: React.FunctionComponent<CareerSectionProps> = (props) => {
   const [{ type: screenType }] = useScreenState()
   const [{ careers }] = useCareerState()
 
-  const containerRef = useRefCallback((node) => {
+  const [containerRef] = useRefCallback((node) => {
     if (props.onResize && node) {
       const onResize = props.onResize
       onResize(node.getBoundingClientRect())

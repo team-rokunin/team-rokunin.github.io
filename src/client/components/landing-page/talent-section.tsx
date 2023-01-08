@@ -18,7 +18,7 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
     progress: 0,
   })
 
-  const containerRef = useRefCallback((node) => {
+  const [containerRef] = useRefCallback((node) => {
     if (props.onResize && node) {
       const onResize = props.onResize
       onResize(node.getBoundingClientRect())
@@ -141,7 +141,7 @@ const ProgressBar: React.FunctionComponent<ProgressBarProps> = (props) => {
   const [{ type: screenType }] = useScreenState()
   const [state, setState] = React.useState<ProgressBarState>({})
 
-  const containerRef = useRefCallback((node) => {
+  const [containerRef] = useRefCallback((node) => {
     if (node) {
       setState((state) => ({ ...state, dimension: node.getBoundingClientRect() }))
       const resizeObserver = new ResizeObserver(() => {
