@@ -8,9 +8,9 @@ import { useScreenState } from '../../store/screen'
 import { usePortfolioState } from '../../store/portfolio'
 import { useRefCallback } from '../common/hook'
 import { replaceRGBAlpha } from '../common/color'
+import HeaderText from '../common/header-text'
 import Button from '../common/button'
 import VideoLightboxModal from '../common/lightbox'
-import { headerCursorAnimation } from './'
 import { crtTurnOnAnimation, crtTurnOffAnimation } from './hero-section'
 
 const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props) => {
@@ -100,35 +100,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
           padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '46px 0' : '64px 192px',
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            columnGap: ['xs-phone'].includes(screenType) ? '16px' : '24px',
-            padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 46px' : '0',
-            margin: '64px auto',
-            maxWidth: '952px',
-          }}
-        >
-          <Box
-            sx={{
-              width: ['xs-phone'].includes(screenType) ? '12px' : '16px',
-              height: ['xs-phone'].includes(screenType) ? '24px' : '32px',
-              backgroundColor: theme.palette.primary[400],
-              animation: `${headerCursorAnimation} 3s linear infinite`,
-            }}
-          />
-          <Typography
-            level="h3"
-            sx={{
-              color: theme.palette.text.primary,
-            }}
-          >
-            WE ARE ROKUNIN
-          </Typography>
-        </Box>
+        <HeaderText text="WE ARE ROKUNIN" />
         <Typography
           level="h4"
           sx={{

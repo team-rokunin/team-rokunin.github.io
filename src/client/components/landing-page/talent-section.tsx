@@ -8,8 +8,8 @@ import { useScreenState } from '../../store/screen'
 import { useCareerState } from '../../store/career'
 import { useRefCallback } from '../common/hook'
 import { replaceRGBAlpha } from '../common/color'
+import HeaderText from '../common/header-text'
 import Button from '../common/button'
-import { headerCursorAnimation } from './'
 
 const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
   const [{ type: screenType }] = useScreenState()
@@ -52,29 +52,7 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
         padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '46px' : '64px 192px',
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          columnGap: ['xs-phone'].includes(screenType) ? '16px' : '24px',
-          margin: '64px auto',
-          maxWidth: '952px',
-        }}
-      >
-        <Box
-          sx={{
-            width: ['xs-phone'].includes(screenType) ? '12px' : '16px',
-            height: ['xs-phone'].includes(screenType) ? '24px' : '32px',
-            backgroundColor: theme.palette.primary[400],
-            animation: `${headerCursorAnimation} 3s linear infinite`,
-          }}
-        />
-        <Typography level="h3" sx={{ color: theme.palette.text.primary }}>
-          TALENT
-        </Typography>
-      </Box>
+      <HeaderText text="TALENT" />
       <Typography
         level="body1"
         sx={{

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { keyframes } from '@emotion/react'
 import Portal from '@mui/base/Portal'
 
 import GrainBackground from '../common/grain-background'
@@ -10,17 +9,6 @@ import FooterSection from '../landing-page/footer-section'
 import CareerSection from './career-section'
 import ApplySection from './apply-section'
 
-export const headerCursorAnimation = keyframes`
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`
 const TalentPage: React.FunctionComponent = () => {
   const [state, setState] = React.useState<TalentPageState>({
     dimensions: {},
