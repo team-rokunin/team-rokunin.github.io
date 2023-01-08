@@ -204,7 +204,7 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
     playState: 'loading',
     controlled: false,
   })
-  const [setVideoRef, videoRef] = useRefCallback<HTMLVideoElement>((node) => {
+  const [videoRef, video] = useRefCallback<HTMLVideoElement>((node) => {
     node.play()
   })
 
@@ -218,7 +218,6 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
   }, [props.playState, state.playState, state.controlled])
 
   React.useEffect(() => {
-    const video = videoRef
     if (state.playState === 'paused') {
       video?.pause()
     } else if (state.playState === 'playing') {
@@ -227,7 +226,6 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
   }, [state.playState])
 
   const onVideoLoaded = () => {
-    const video = videoRef
     if (video) {
       setState((state) => ({
         ...state,
@@ -236,7 +234,6 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
     }
   }
   const onVideoEnded = () => {
-    const video = videoRef
     setState((state) => ({
       ...state,
       playState: 'stopped',
@@ -266,7 +263,6 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
   }
 
   const theme = useTheme()
-  const { video } = props
   const { playState } = state
   return (
     <Box
@@ -292,7 +288,7 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
     >
       <Box
         component="video"
-        ref={setVideoRef}
+        ref={videoRef}
         autoPlay
         playsInline
         muted
@@ -311,7 +307,7 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
               : undefined,
         }}
       >
-        <source src={video} type="video/mp4" />
+        <source src={props.video} type="video/mp4" />
       </Box>
       <Box
         className="filter"
