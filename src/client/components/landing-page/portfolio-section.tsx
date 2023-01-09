@@ -205,7 +205,19 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
     controlled: false,
   })
   const [videoRef, video] = useRefCallback<HTMLVideoElement>((node) => {
-    node.play()
+    const setPlayState = () =>
+      setState((state) => ({
+        ...state,
+        playState: props.playState,
+      }))
+    ;(async () => {
+      await node.play()
+      if (node.readyState === 4) {
+        setPlayState()
+      }
+    })()
+    node.addEventListener('canplay', setPlayState)
+    return () => node.removeEventListener('canplay', setPlayState)
   })
 
   React.useEffect(() => {
