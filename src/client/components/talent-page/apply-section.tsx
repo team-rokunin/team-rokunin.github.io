@@ -122,7 +122,9 @@ const ApplySection: React.FunctionComponent<ApplySectionProps> = (props) => {
         padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '46px' : '64px 192px',
       }}
     >
-      <HeaderText text="APPLY NOW" />
+      <Box sx={{ margin: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 -24px' : '0' }}>
+        <HeaderText text="APPLY NOW" />
+      </Box>
       <Typography
         level="body1"
         sx={{

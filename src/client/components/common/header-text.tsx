@@ -108,6 +108,7 @@ const HeaderText: React.FC<HeaderTextProps> = (props) => {
         <Typography
           level="h3"
           sx={{
+            letterSpacing: ['xs-phone'].includes(screenType) ? '1px' : undefined,
             color: theme.palette.text.primary,
             padding: `0 ${['xs-phone'].includes(screenType) ? 12 : 24}px`,
             transform: appear ? 'translateX(0)' : `translateX(${width}px)`,

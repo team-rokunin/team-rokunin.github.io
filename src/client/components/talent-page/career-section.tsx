@@ -36,7 +36,9 @@ const CareerSection: React.FunctionComponent<CareerSectionProps> = (props) => {
         padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '46px' : '64px 192px',
       }}
     >
-      <HeaderText text="CAREER" />
+      <Box sx={{ margin: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 -24px' : '0' }}>
+        <HeaderText text="CAREER" />
+      </Box>
       <Typography
         level="body1"
         sx={{

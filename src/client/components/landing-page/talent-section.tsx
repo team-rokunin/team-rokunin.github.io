@@ -52,7 +52,9 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
         padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '46px' : '64px 192px',
       }}
     >
-      <HeaderText text="TALENT" />
+      <Box sx={{ margin: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 -24px' : '0' }}>
+        <HeaderText text="TALENT" />
+      </Box>
       <Typography
         level="body1"
         sx={{
@@ -78,13 +80,19 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
           WE ARE LOOKING FOR
         </Typography>
         <Box>
-          <Box sx={{ padding: '32px', border: `2px solid ${theme.palette.primary[400]}`, borderBottom: '0' }}>
+          <Box
+            sx={{
+              padding: ['xs-phone'].includes(screenType) ? '32px 16px' : '32px',
+              border: `2px solid ${theme.palette.primary[400]}`,
+              borderBottom: '0',
+            }}
+          >
             <Typography
               level="h4"
               sx={{
                 fontSize: '32px',
-                paddingLeft: ['xs-phone'].includes(screenType) ? '0.5em' : '1em',
-                letterSpacing: ['xs-phone'].includes(screenType) ? '0.5em' : '1em',
+                paddingLeft: ['xs-phone'].includes(screenType) ? '0.3em' : '1em',
+                letterSpacing: ['xs-phone'].includes(screenType) ? '0.3em' : '1em',
                 color: theme.palette.primary[400],
                 textAlign: 'center',
                 wordBreak: 'break-word',
