@@ -125,8 +125,7 @@ const ContactSection: React.FunctionComponent<ContactSectionProps> = (props) => 
           textAlign: 'center',
         }}
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua.
+        Drop us a message.
       </Typography>
       <Box
         sx={{

@@ -97,17 +97,16 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '46px 0' : '64px 192px',
+          padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '46px' : '64px 192px',
         }}
       >
-        <Box sx={{ padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 22px' : '0' }}>
+        <Box sx={{ padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 -24px' : '0' }}>
           <HeaderText text="WE ARE ROKUNIN" />
         </Box>
         <Typography
           level="h4"
           sx={{
             color: theme.palette.text.secondary,
-            padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 46px' : '0',
             margin: '64px auto',
             maxWidth: '952px',
             textAlign: 'center',
@@ -119,7 +118,6 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
           level="body1"
           sx={{
             color: theme.palette.text.secondary,
-            padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 46px' : '0',
             margin: '64px auto',
             maxWidth: '952px',
             textAlign: 'center',
@@ -135,7 +133,7 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
             gridTemplateColumns: ['xs-phone'].includes(screenType) ? '1fr' : 'repeat(2, 1fr)',
             gap: '64px',
             maxWidth: '1016px',
-            margin: '96px auto 16px',
+            margin: ['xs-phone', 'sm-tablet'].includes(screenType) ? '96px -46px 16px' : '96px auto 16px',
             padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 46px' : '0 32px',
           }}
         >
@@ -154,7 +152,6 @@ const PortfolioSection: React.FunctionComponent<PortfolioSectionProps> = (props)
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            padding: ['xs-phone', 'sm-tablet'].includes(screenType) ? '0 46px' : '0',
             margin: '64px',
           }}
         >

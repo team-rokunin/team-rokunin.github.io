@@ -48,8 +48,8 @@ const CareerSection: React.FunctionComponent<CareerSectionProps> = (props) => {
           textAlign: 'center',
         }}
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua.
+        We value artists growth and development, providing you the best opportunity to showcase your skills and
+        abilities.
       </Typography>
       <Box
         sx={{

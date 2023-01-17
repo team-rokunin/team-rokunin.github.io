@@ -64,8 +64,7 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
           textAlign: 'center',
         }}
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua.
+        Join our clan.
       </Typography>
       <Box
         sx={{

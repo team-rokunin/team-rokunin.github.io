@@ -134,8 +134,7 @@ const ApplySection: React.FunctionComponent<ApplySectionProps> = (props) => {
           textAlign: 'center',
         }}
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua.
+        Seize the moment, strike now.
       </Typography>
       <Box
         sx={{

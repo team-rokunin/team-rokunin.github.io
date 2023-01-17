@@ -56,6 +56,15 @@ const ThemeProvider: React.FunctionComponent<React.PropsWithChildren> = (props) 
         fontSize: ['xs-phone'].includes(screenType) ? '10px' : '12px',
       },
     },
+    breakpoints: {
+      values: {
+        xl: 1536,
+        lg: 1200,
+        md: 900,
+        sm: 600,
+        xs: 0,
+      },
+    },
   })
 
   const { children } = props
