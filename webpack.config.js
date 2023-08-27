@@ -78,14 +78,14 @@ module.exports = {
       template: 'src/client/404.html',
       chunks: ['404'],
     }),
-    // new CopyWebpackPlugin({
-    //   patterns: [
-    //     {
-    //       from: 'src/asset/static/**/*',
-    //       to: '[name].[ext]',
-    //     },
-    //   ],
-    // }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'src/asset/static/**/*',
+          to: '[name][ext]',
+        },
+      ],
+    }),
     ...(process.env.NODE_ENV !== 'development'
       ? [
           new WorkboxWebpackPlugin.GenerateSW({
