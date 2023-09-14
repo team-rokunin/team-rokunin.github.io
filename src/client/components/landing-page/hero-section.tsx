@@ -151,6 +151,34 @@ const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
         overflow: 'hidden',
       }}
     >
+      {screenType !== 'xs-phone' && (
+        <Box
+          sx={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            zIndex: 1,
+          }}
+        >
+          {['left', 'right'].map(side => (
+            <Box
+              key={side}
+              sx={{
+                position: 'absolute',
+                [side]: '0',
+                width: '288px',
+                height: '100%',
+                background: `linear-gradient(${[
+                  `to ${side === 'left' ? 'right' : 'left'}`,
+                  'rgba(0, 0, 0, 1)',
+                  'rgba(0, 0, 0, 0.1) 80%',
+                  'rgba(0, 0, 0, 0)'
+                ].join(', ')})`,
+              }}
+            />
+          ))}
+        </Box>
+      )}
       <Box
         component="video"
         ref={videoRef}
