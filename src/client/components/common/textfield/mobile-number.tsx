@@ -80,6 +80,7 @@ type MobileNumberTextFieldProps = {
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
   placeholder?: string
   helperText?: string
+  disabled?: boolean
 }
 
 export default MobileNumberTextField

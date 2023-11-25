@@ -4,6 +4,7 @@ import Box from '@mui/joy/Box'
 import Typography from '@mui/joy/Typography'
 
 import { useScreenState } from '../../store/screen'
+import { useCareerState } from '../../store/career'
 import { useFormState } from '../../store/form'
 import { useRefCallback } from '../common/hook'
 import HeaderText from '../common/header-text'
@@ -17,6 +18,7 @@ import { FormResultOverlay } from '../landing-page/contact-section'
 const ApplySection: React.FunctionComponent<ApplySectionProps> = (props) => {
   const [{ type: screenType }] = useScreenState()
   const [{ submission }, { submitApplication, resetForm }] = useFormState()
+  const [{ careers }] = useCareerState()
   const [state, setState] = React.useState<ApplySectionState>({
     input: {
       firstName: '',
@@ -111,6 +113,7 @@ const ApplySection: React.FunctionComponent<ApplySectionProps> = (props) => {
 
   const theme = useTheme()
   const { input, error, result } = state
+  const disabled = careers.length === 0
   return (
     <Box
       ref={containerRef}
@@ -132,6 +135,7 @@ const ApplySection: React.FunctionComponent<ApplySectionProps> = (props) => {
           margin: '64px auto',
           maxWidth: '952px',
           textAlign: 'center',
+          textDecoration: disabled ? 'line-through' : 'none',
         }}
       >
         Seize the moment, strike now.
@@ -160,6 +164,7 @@ const ApplySection: React.FunctionComponent<ApplySectionProps> = (props) => {
             onChange={onChange('firstName')}
             placeholder="Type Here"
             helperText={error.firstName}
+            disabled={disabled}
           />
           <TextField
             label="Last Name"
@@ -167,6 +172,7 @@ const ApplySection: React.FunctionComponent<ApplySectionProps> = (props) => {
             onChange={onChange('lastName')}
             placeholder="Type Here"
             helperText={error.lastName}
+            disabled={disabled}
           />
           <EmailTextField
             label="Email"
@@ -174,6 +180,7 @@ const ApplySection: React.FunctionComponent<ApplySectionProps> = (props) => {
             onChange={onChange('email')}
             placeholder="Type Here"
             helperText={error.email}
+            disabled={disabled}
           />
           <MobileNumberTextField
             label="Phone Number"
@@ -181,6 +188,7 @@ const ApplySection: React.FunctionComponent<ApplySectionProps> = (props) => {
             onChange={onChange('phoneNumber')}
             placeholder="Type Here"
             helperText={error.phoneNumber}
+            disabled={disabled}
           />
           <Box sx={{ gridColumn: ['xs-phone'].includes(screenType) ? undefined : 'span 2' }}>
             <TextField
@@ -188,6 +196,7 @@ const ApplySection: React.FunctionComponent<ApplySectionProps> = (props) => {
               value={input.portfolioLink}
               onChange={onChange('portfolioLink')}
               placeholder="Type Here"
+              disabled={disabled}
             />
           </Box>
           <Box sx={{ gridColumn: ['xs-phone'].includes(screenType) ? undefined : 'span 2' }}>
@@ -196,6 +205,7 @@ const ApplySection: React.FunctionComponent<ApplySectionProps> = (props) => {
               files={input.resume}
               onChangeFiles={onChangeFiles('resume')}
               helperText={error.resume}
+              disabled={disabled}
             />
           </Box>
           <Box sx={{ gridColumn: ['xs-phone'].includes(screenType) ? undefined : 'span 2' }}>
@@ -204,6 +214,7 @@ const ApplySection: React.FunctionComponent<ApplySectionProps> = (props) => {
               value={input.remarks}
               onChange={onChange('remarks')}
               placeholder="Type Here"
+              disabled={disabled}
               multiline
             />
           </Box>
@@ -214,7 +225,7 @@ const ApplySection: React.FunctionComponent<ApplySectionProps> = (props) => {
             justifyContent: 'center',
           }}
         >
-          <Button label="SUBMIT" onClick={onSubmit} />
+          <Button label="SUBMIT" onClick={onSubmit} disabled={disabled} />
         </Box>
       </Box>
     </Box>

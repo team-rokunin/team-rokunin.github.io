@@ -9,6 +9,7 @@ const SvgButton = React.forwardRef(
     const { label, url, ownerState, color, ...others } = props
     const id = label.replace(/\s/g, '-')
     const colorPalette = color === 'danger' ? theme.palette.danger[400] : theme.palette.primary[600]
+    console.log(props.disabled)
     return (
       <Box
         component="a"
@@ -24,6 +25,7 @@ const SvgButton = React.forwardRef(
           border: 'none',
           transition: 'transform 160ms ease-in-out',
           opacity: props.disabled ? 0.5 : 1,
+          textDecoration: 'none',
           [`&.${buttonUnstyledClasses.focusVisible}, &:hover`]: {
             transform: 'scale(1.03)',
           },
@@ -106,7 +108,7 @@ const SvgButton = React.forwardRef(
 )
 
 const Button = React.forwardRef((props: ButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) => {
-  return <ButtonUnstyled {...props} slots={{ root: SvgButton }} ref={ref} />
+  return <ButtonUnstyled {...props} slots={{ root: SvgButton }} slotProps={{ root: props }} ref={ref} />
 })
 type ButtonProps = {
   label: string

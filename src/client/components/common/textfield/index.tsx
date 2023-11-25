@@ -190,6 +190,7 @@ type TextFieldProps = {
   placeholder?: string
   helperText?: string
   multiline?: boolean
+  disabled?: boolean
 }
 
 export default TextField

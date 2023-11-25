@@ -48,8 +48,10 @@ const CareerSection: React.FunctionComponent<CareerSectionProps> = (props) => {
           textAlign: 'center',
         }}
       >
-        We value artists growth and development, providing you the best opportunity to showcase your skills and
-        abilities.
+        {careers.length > 0
+          ? 'We value artists growth and development, providing you the best opportunity to showcase your skills and abilities.'
+          : 'We are not hiring at the moment.'
+        }
       </Typography>
       <Box
         sx={{

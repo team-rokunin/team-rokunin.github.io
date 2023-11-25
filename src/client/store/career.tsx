@@ -24,13 +24,15 @@ export const Provider: React.FunctionComponent<React.PropsWithChildren> = (props
     )
     const ref = Database.ref(database, 'careers')
     Database.get(ref).then((snapshot) => {
-      const values = snapshot.val() as { title: string; descriptions: string[] }[]
+      const values = snapshot.val() as { title: string; descriptions: string[]; slots: number }[]
       setState((state) => ({
         ...state,
-        careers: values.map((value) => ({
-          title: value.title.toUpperCase(),
-          descriptions: value.descriptions,
-        })),
+        careers: values
+          .filter((value) => value.slots > 0)
+          .map((value) => ({
+            title: value.title.toUpperCase(),
+            descriptions: value.descriptions
+          })),
       }))
     })
   }, [])

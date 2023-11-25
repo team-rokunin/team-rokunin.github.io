@@ -240,6 +240,7 @@ type FileFieldProps = {
   files?: File[]
   onChangeFiles?: (files: File[]) => void
   helperText?: string
+  disabled?: boolean
 }
 
 export default FileField

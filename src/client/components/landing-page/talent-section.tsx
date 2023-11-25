@@ -62,6 +62,7 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
           margin: '64px auto',
           maxWidth: '952px',
           textAlign: 'center',
+          textDecoration: careers.length > 0 ? 'none' : 'line-through',
         }}
       >
         Join our clan.
@@ -75,8 +76,14 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
           gap: '16px',
         }}
       >
-        <Typography level="h4" sx={{ color: theme.palette.text.primary, textAlign: 'center' }}>
-          WE ARE LOOKING FOR
+        <Typography
+          level="h4"
+          sx={{ color: theme.palette.text.primary, textAlign: 'center' }}
+        >
+          {careers.length > 0
+            ? 'WE ARE LOOKING FOR'
+            : 'SORRY, WE ARE NOT LOOKING FOR'
+          }
         </Typography>
         <Box>
           <Box
