@@ -160,7 +160,7 @@ const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
             zIndex: 1,
           }}
         >
-          {['left', 'right'].map(side => (
+          {['left', 'right'].map((side) => (
             <Box
               key={side}
               sx={{
@@ -172,7 +172,7 @@ const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
                   `to ${side === 'left' ? 'right' : 'left'}`,
                   'rgba(0, 0, 0, 1)',
                   'rgba(0, 0, 0, 0.1) 80%',
-                  'rgba(0, 0, 0, 0)'
+                  'rgba(0, 0, 0, 0)',
                 ].join(', ')})`,
               }}
             />
@@ -196,8 +196,8 @@ const HeroSection: React.FunctionComponent<HeroSectionProps> = (props) => {
             playState === 'playing'
               ? `${crtTurnOnAnimation} 2.3s linear forwards`
               : playState === 'paused'
-              ? `${crtTurnOffAnimation} 0.55s cubic-bezier(0.230, 1.000, 0.320, 1.000) forwards`
-              : undefined,
+                ? `${crtTurnOffAnimation} 0.55s cubic-bezier(0.230, 1.000, 0.320, 1.000) forwards`
+                : undefined,
         }}
       >
         <source src={HeroVideo} type="video/mp4" />

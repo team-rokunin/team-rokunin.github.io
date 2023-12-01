@@ -31,7 +31,7 @@ export const Provider: React.FunctionComponent<React.PropsWithChildren> = (props
           .filter((value) => value.slots > 0)
           .map((value) => ({
             title: value.title.toUpperCase(),
-            descriptions: value.descriptions
+            descriptions: value.descriptions,
           })),
       }))
     })

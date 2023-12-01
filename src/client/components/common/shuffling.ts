@@ -24,8 +24,8 @@ const shuffleText = (text: string) => {
           frame < letter.start
             ? { text: letter.from, shuffling: false }
             : frame >= letter.end
-            ? { text: letter.to, shuffling: false }
-            : { text: letter.current ?? ' ', shuffling: true }
+              ? { text: letter.to, shuffling: false }
+              : { text: letter.current ?? ' ', shuffling: true }
         )
       const nextShufflingText = mapShufflingText(nextLetters)
       setState((state) => ({

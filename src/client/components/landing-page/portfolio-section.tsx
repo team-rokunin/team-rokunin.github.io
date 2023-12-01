@@ -312,8 +312,8 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
             playState === 'playing'
               ? `${crtTurnOnAnimation} 2.3s linear forwards`
               : playState === 'paused'
-              ? `${crtTurnOffAnimation} 0.55s cubic-bezier(0.230, 1.000, 0.320, 1.000) forwards`
-              : undefined,
+                ? `${crtTurnOffAnimation} 0.55s cubic-bezier(0.230, 1.000, 0.320, 1.000) forwards`
+                : undefined,
         }}
       >
         <source src={props.video} type="video/mp4" />
@@ -354,9 +354,8 @@ export const VideoDemo = React.forwardRef<HTMLDivElement, VideoDemoProps>((props
               ...directions.reduce(
                 (sx, direction) => ({
                   ...sx,
-                  [`border${direction[0].toUpperCase()}${direction.slice(
-                    1
-                  )}`]: `2px solid ${theme.palette.text.primary}`,
+                  [`border${direction[0].toUpperCase()}${direction.slice(1)}`]:
+                    `2px solid ${theme.palette.text.primary}`,
                 }),
                 {}
               ),

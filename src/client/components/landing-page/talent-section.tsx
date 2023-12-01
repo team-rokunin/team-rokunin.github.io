@@ -41,7 +41,7 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
 
   const theme = useTheme()
   const { progress } = state
-  return (
+  return careers.length !== 0 ? (
     <Box
       ref={containerRef}
       sx={{
@@ -62,7 +62,6 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
           margin: '64px auto',
           maxWidth: '952px',
           textAlign: 'center',
-          textDecoration: careers.length > 0 ? 'none' : 'line-through',
         }}
       >
         Join our clan.
@@ -76,14 +75,8 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
           gap: '16px',
         }}
       >
-        <Typography
-          level="h4"
-          sx={{ color: theme.palette.text.primary, textAlign: 'center' }}
-        >
-          {careers.length > 0
-            ? 'WE ARE LOOKING FOR'
-            : 'SORRY, WE ARE NOT LOOKING FOR'
-          }
+        <Typography level="h4" sx={{ color: theme.palette.text.primary, textAlign: 'center' }}>
+          WE ARE LOOKING FOR
         </Typography>
         <Box>
           <Box
@@ -142,7 +135,7 @@ const TalentSection: React.FunctionComponent<TalentSectionProps> = (props) => {
         <Button label="VIEW" url="/talent" onClick={onClick} disabled={careers.length === 0} />
       </Box>
     </Box>
-  )
+  ) : null
 }
 type TalentSectionState = {
   progress: number

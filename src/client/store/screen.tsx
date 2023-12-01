@@ -13,12 +13,12 @@ const trackScreenType = () => {
     width >= 1536
       ? 'xl-desktop'
       : width >= 1200
-      ? 'lg-desktop'
-      : width >= 900
-      ? 'md-desktop'
-      : width >= 600
-      ? 'sm-tablet'
-      : 'xs-phone'
+        ? 'lg-desktop'
+        : width >= 900
+          ? 'md-desktop'
+          : width >= 600
+            ? 'sm-tablet'
+            : 'xs-phone'
   return type
 }
 
