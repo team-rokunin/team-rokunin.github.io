@@ -341,7 +341,7 @@ const NavigationBar: React.FunctionComponent<NavigationBarProps> = (props) => {
             {
               label: 'LinkedIn',
               icon: LinkedInLogo,
-              url: 'https://www.linkedin.com/in/team-rokunin-224553200',
+              url: 'https://www.linkedin.com/company/rokunin',
             },
             {
               label: 'Instagram',
